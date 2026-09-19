@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1a1a19" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)">
+<title>CCDV-F — Seeing It</title>
+<style>
+:root{
+  --surface:#fcfcfb; --card:#fff; --rule:#e3e1db;
+  --tx1:#0b0b0b; --tx2:#52514e; --tx3:#84827c;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#4a3aa7;
+  --dim:#cfcdc6;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --surface:#1a1a19; --card:#232321; --rule:#35352f;
+    --tx1:#fff; --tx2:#c3c2b7; --tx3:#918f86;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#9085e9;
+    --dim:#45443e;
+  }
+}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--surface);color:var(--tx1);
+ font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,sans-serif;padding-bottom:4rem}
+.wrap{max-width:760px;margin:0 auto;padding:0 1.15rem}
+header{padding:2.4rem 0 1.2rem;border-bottom:1px solid var(--rule)}
+h1{font:600 1.75rem/1.2 "New York","Iowan Old Style",Georgia,serif;margin:0 0 .5rem;letter-spacing:-.01em}
+.lede{color:var(--tx2);font-size:.92rem;margin:0}
+.swap{display:inline-block;margin-top:1rem;margin-right:1rem;font-size:.8rem;font-weight:600;color:var(--s1);text-decoration:none}
+h2{font:600 1.3rem/1.25 "New York",Georgia,serif;margin:3rem 0 .2rem;letter-spacing:-.01em}
+.kicker{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);font-weight:800;margin:0 0 .5rem}
+p{font-size:.94rem}
+figure{margin:1.4rem 0;padding:1.1rem;background:var(--card);border:1px solid var(--rule);border-radius:14px}
+figure svg{width:100%;height:auto;display:block;overflow:visible}
+figcaption{font-size:.82rem;color:var(--tx2);margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule)}
+figcaption b{color:var(--tx1)}
+.scene{background:linear-gradient(180deg,transparent,var(--card));border-left:3px solid var(--s2);
+ padding:.9rem 1.1rem;border-radius:0 12px 12px 0;margin:1.2rem 0;font-size:.92rem}
+.scene b{color:var(--s2)}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif}
+.t1{fill:var(--tx1)} .t2{fill:var(--tx2)} .t3{fill:var(--tx3)}
+.lbl{font-size:11px;font-weight:700}
+.sub{font-size:9.5px}
+.big{font-size:13px;font-weight:700}
+.ax{stroke:var(--rule);stroke-width:2;fill:none}
+.node{stroke-width:2;fill:var(--card)}
+.edge{stroke-width:2;fill:none}
+footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--rule);color:var(--tx3);font-size:.78rem}
+footer a{color:var(--s1)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Seeing it</h1>
+  <p class="lede">The same structures, drawn instead of described — grounded in a working kitchen on a Friday night. No chosen ones, no prophecies. Just people, rules, and not enough counter space.</p>
+  <a class="swap" href="./grid.html">Metaphor grid →</a>
+  <a class="swap" href="./perishables.html">Perishables →</a>
+</header>
+
+<div class="scene">
+  <b>The kitchen.</b> An owner who wrote the prep lists months ago and isn't here tonight. An expediter at the pass calling tickets. Line cooks at their stations. And a new hire on day one who doesn't know why the walk-in is arranged the way it is, or why nobody touches the second fryer.
+  <br><br>Everything below is one of those four people, or something they're fighting over.
+</div>
+
+<!-- ============ 1. FOUR SEATS ============ -->
+<p class="kicker">Figure 1 · authority over time</p>
+<h2>Four seats, not three</h2>
+<p>The difference between them isn't <i>who</i> — it's <b>when</b>. Each one acts at a different moment relative to service, and that's what makes them do different jobs.</p>
+
+<figure>
+<svg viewBox="0 0 640 310" role="img" aria-label="Timeline of four stances relative to a kitchen service">
+  <!-- timeline -->
+  <line x1="40" y1="150" x2="600" y2="150" class="ax"/>
+  <line x1="215" y1="128" x2="215" y2="172" stroke="var(--tx3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="470" y1="128" x2="470" y2="172" stroke="var(--tx3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="215" y="188" class="t3 sub" text-anchor="middle">doors open</text>
+  <text x="470" y="188" class="t3 sub" text-anchor="middle">doors close</text>
+
+  <!-- architect -->
+  <rect x="40" y="88" width="168" height="44" rx="9" fill="var(--s1)" opacity=".13"/>
+  <circle cx="60" cy="110" r="7" fill="var(--s1)"/>
+  <text x="76" y="107" class="t1 lbl">Architect</text>
+  <text x="76" y="122" class="t2 sub">writes the prep list · posts the code</text>
+  <text x="40" y="76" class="t3 sub">BEFORE — law</text>
+
+  <!-- operator -->
+  <rect x="222" y="88" width="242" height="44" rx="9" fill="var(--s2)" opacity=".13"/>
+  <circle cx="242" cy="110" r="7" fill="var(--s2)"/>
+  <text x="258" y="107" class="t1 lbl">Operator</text>
+  <text x="258" y="122" class="t2 sub">at the pass, calling audibles all night</text>
+  <text x="222" y="76" class="t3 sub">DURING — judgment</text>
+
+  <!-- construct-self -->
+  <rect x="222" y="196" width="242" height="44" rx="9" fill="var(--s3)" opacity=".15"/>
+  <circle cx="242" cy="218" r="7" fill="var(--s3)"/>
+  <text x="258" y="215" class="t1 lbl">Construct-self</text>
+  <text x="258" y="230" class="t2 sub">feels the counter fill and the clock run</text>
+  <text x="222" y="256" class="t3 sub">INSIDE — experience, not control</text>
+
+  <!-- investigator -->
+  <rect x="40" y="196" width="168" height="44" rx="9" fill="var(--s4)" opacity=".18"/>
+  <circle cx="60" cy="218" r="7" fill="var(--s4)"/>
+  <text x="76" y="215" class="t1 lbl">Investigator</text>
+  <text x="76" y="230" class="t2 sub">day one — why is it like this?</text>
+  <text x="40" y="256" class="t3 sub">INSIDE, WITHOUT THE RULES — learning</text>
+
+  <!-- arc arrow: investigator up to architect -->
+  <path d="M 124 196 L 124 136" stroke="var(--s4)" stroke-width="2" fill="none" marker-end="url(#ar4)"/>
+  <defs>
+    <marker id="ar4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="var(--s4)"/>
+    </marker>
+    <marker id="arL" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="var(--tx3)"/>
+    </marker>
+    <marker id="ar1" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L6.5,3.2 L0,6.4 z" fill="var(--s1)"/>
+    </marker>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L6.5,3.2 L0,6.4 z" fill="var(--s2)"/>
+    </marker>
+    <marker id="arD" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L6.5,3.2 L0,6.4 z" fill="var(--dim)"/>
+    </marker>
+  </defs>
+
+  <!-- the loop -->
+  <path d="M 560 196 C 600 250, 620 40, 470 62 L 120 62 C 70 62, 55 74, 52 84"
+        stroke="var(--tx3)" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arL)"/>
+  <text x="330" y="54" class="t3 sub" text-anchor="middle">tonight's mess becomes tomorrow's prep list</text>
+  <circle cx="560" cy="218" r="7" fill="var(--tx3)"/>
+  <text x="576" y="222" class="t2 sub">after service</text>
+</svg>
+<figcaption><b>Why four.</b> The first three all assume you already know the rules — the Architect wrote them, the Operator works them knowingly, the Construct-self at least knows they exist. The investigator doesn't. It's the only seat where learning happens, and it's where the loop starts: you can't write a prep list for a kitchen you've never worked. <b>Keep it out of the exam test</b> — it settles no question, it just explains why you're studying.</figcaption>
+</figure>
+
+<!-- ============ 2. FIVE KINDS ============ -->
+<p class="kicker">Figure 2 · what sort of thing is this?</p>
+<h2>Five kinds, and only two are nouns</h2>
+<p>This is the whole diagnosis in one row. Object-thinking handles the first two. It has no grip at all on the last three — which is exactly where the hard material lives.</p>
+
+<figure>
+<svg viewBox="0 0 640 170" role="img" aria-label="Five ontological kinds shown as glyphs">
+  <!-- K1 entity -->
+  <circle cx="64" cy="54" r="19" fill="var(--s1)"/>
+  <text x="64" y="94" class="t1 lbl" text-anchor="middle">Entity</text>
+  <text x="64" y="110" class="t2 sub" text-anchor="middle">a thing</text>
+  <text x="64" y="126" class="t3 sub" text-anchor="middle">the cook</text>
+
+  <!-- K2 capability -->
+  <circle cx="192" cy="54" r="19" fill="none" stroke="var(--s1)" stroke-width="3"/>
+  <rect x="185" y="30" width="5" height="18" rx="2" fill="var(--s1)" transform="rotate(32 187 39)"/>
+  <text x="192" y="94" class="t1 lbl" text-anchor="middle">Capability</text>
+  <text x="192" y="110" class="t2 sub" text-anchor="middle">what it can do</text>
+  <text x="192" y="126" class="t3 sub" text-anchor="middle">the knife</text>
+
+  <!-- K3 position -->
+  <line x1="286" y1="54" x2="354" y2="54" stroke="var(--dim)" stroke-width="3"/>
+  <line x1="320" y1="34" x2="320" y2="74" stroke="var(--s2)" stroke-width="4"/>
+  <text x="320" y="94" class="t1 lbl" text-anchor="middle">Position</text>
+  <text x="320" y="110" class="t2 sub" text-anchor="middle">a moment</text>
+  <text x="320" y="126" class="t3 sub" text-anchor="middle">the pass</text>
+
+  <!-- K4 scarce medium -->
+  <rect x="414" y="38" width="68" height="32" rx="5" fill="none" stroke="var(--dim)" stroke-width="2.5"/>
+  <rect x="417" y="41" width="38" height="26" rx="3" fill="var(--s3)"/>
+  <text x="448" y="94" class="t1 lbl" text-anchor="middle">Scarce medium</text>
+  <text x="448" y="110" class="t2 sub" text-anchor="middle">a quantity spent</text>
+  <text x="448" y="126" class="t3 sub" text-anchor="middle">counter space</text>
+
+  <!-- K5 topology -->
+  <circle cx="556" cy="34" r="6" fill="var(--s4)"/>
+  <circle cx="534" cy="68" r="6" fill="var(--s4)"/>
+  <circle cx="578" cy="68" r="6" fill="var(--s4)"/>
+  <line x1="556" y1="40" x2="536" y2="62" stroke="var(--s4)" stroke-width="2"/>
+  <line x1="556" y1="40" x2="576" y2="62" stroke="var(--s4)" stroke-width="2"/>
+  <text x="556" y="94" class="t1 lbl" text-anchor="middle">Topology</text>
+  <text x="556" y="110" class="t2 sub" text-anchor="middle">a shape between</text>
+  <text x="556" y="126" class="t3 sub" text-anchor="middle">ticket flow</text>
+
+  <!-- bracket -->
+  <path d="M 262 148 L 262 154 L 618 154 L 618 148" stroke="var(--s2)" stroke-width="2" fill="none"/>
+  <text x="440" y="168" class="t2 sub" text-anchor="middle" style="font-weight:700">object-thinking has no handle here</text>
+  <path d="M 26 148 L 26 154 L 230 154 L 230 148" stroke="var(--s1)" stroke-width="2" fill="none"/>
+  <text x="128" y="168" class="t2 sub" text-anchor="middle" style="font-weight:700">you already own this</text>
+</svg>
+<figcaption>A hook isn't a thing, it's a <b>moment</b>. A context window isn't a thing, it's a <b>quantity</b>. Orchestrator-workers isn't a thing, it's a <b>shape</b>. Reaching for a noun is what made them slip.</figcaption>
+</figure>
+
+<!-- ============ 3. TOPOLOGIES ============ -->
+<p class="kicker">Figure 3 · how tickets move</p>
+<h2>The five patterns are literally shapes</h2>
+<p>Kind 5 means "shape," so drawing them isn't a metaphor — it's the most direct representation there is. Watch what's <b>solid</b> versus <b>faded</b>, and what's <b>dashed</b>.</p>
+
+<figure>
+<svg viewBox="0 0 640 400" role="img" aria-label="Five agent pattern topologies as node-link diagrams">
+  <!-- chaining -->
+  <text x="20" y="20" class="t1 big">Prompt chaining</text>
+  <text x="20" y="35" class="t2 sub">prep → sauté → plate → pass. Fixed before service.</text>
+  <g>
+    <circle cx="40" cy="62" r="11" class="node" stroke="var(--s1)"/>
+    <circle cx="130" cy="62" r="11" class="node" stroke="var(--s1)"/>
+    <circle cx="220" cy="62" r="11" class="node" stroke="var(--s1)"/>
+    <circle cx="310" cy="62" r="11" class="node" stroke="var(--s1)"/>
+    <line x1="51" y1="62" x2="112" y2="62" class="edge" stroke="var(--s1)" marker-end="url(#ar1)"/>
+    <line x1="141" y1="62" x2="202" y2="62" class="edge" stroke="var(--s1)" marker-end="url(#ar1)"/>
+    <line x1="231" y1="62" x2="292" y2="62" class="edge" stroke="var(--s1)" marker-end="url(#ar1)"/>
+  </g>
+
+  <!-- routing -->
+  <text x="20" y="116" class="t1 big">Routing</text>
+  <text x="20" y="131" class="t2 sub">known stations. The ticket goes to <tspan style="font-weight:700">one</tspan>.</text>
+  <g>
+    <circle cx="40" cy="168" r="11" class="node" stroke="var(--s2)"/>
+    <circle cx="180" cy="142" r="11" class="node" stroke="var(--dim)"/>
+    <circle cx="180" cy="168" r="11" class="node" stroke="var(--s2)"/>
+    <circle cx="180" cy="194" r="11" class="node" stroke="var(--dim)"/>
+    <line x1="51" y1="164" x2="162" y2="144" class="edge" stroke="var(--dim)" marker-end="url(#arD)"/>
+    <line x1="51" y1="168" x2="162" y2="168" class="edge" stroke="var(--s2)" marker-end="url(#ar2)"/>
+    <line x1="51" y1="172" x2="162" y2="192" class="edge" stroke="var(--dim)" marker-end="url(#arD)"/>
+    <text x="200" y="172" class="t2 sub">grill</text>
+    <text x="200" y="146" class="t3 sub">fry</text>
+    <text x="200" y="198" class="t3 sub">cold</text>
+  </g>
+
+  <!-- parallelization -->
+  <text x="350" y="116" class="t1 big">Parallelization</text>
+  <text x="350" y="131" class="t2 sub">known stations. <tspan style="font-weight:700">All</tspan> fire, then converge.</text>
+  <g>
+    <circle cx="370" cy="168" r="11" class="node" stroke="var(--s3)"/>
+    <circle cx="470" cy="142" r="11" class="node" stroke="var(--s3)"/>
+    <circle cx="470" cy="168" r="11" class="node" stroke="var(--s3)"/>
+    <circle cx="470" cy="194" r="11" class="node" stroke="var(--s3)"/>
+    <circle cx="570" cy="168" r="11" class="node" stroke="var(--s3)"/>
+    <line x1="381" y1="164" x2="452" y2="145" class="edge" stroke="var(--s3)"/>
+    <line x1="381" y1="168" x2="456" y2="168" class="edge" stroke="var(--s3)"/>
+    <line x1="381" y1="172" x2="452" y2="191" class="edge" stroke="var(--s3)"/>
+    <line x1="484" y1="145" x2="557" y2="164" class="edge" stroke="var(--s3)"/>
+    <line x1="484" y1="168" x2="557" y2="168" class="edge" stroke="var(--s3)"/>
+    <line x1="484" y1="191" x2="557" y2="172" class="edge" stroke="var(--s3)"/>
+  </g>
+
+  <!-- orchestrator -->
+  <text x="20" y="248" class="t1 big">Orchestrator-workers</text>
+  <text x="20" y="263" class="t2 sub">The expediter invents the split <tspan style="font-weight:700">mid-service</tspan>. Dashed = drawn at run time.</text>
+  <g>
+    <circle cx="70" cy="312" r="15" fill="var(--s4)"/>
+    <text x="70" y="342" class="t2 sub" text-anchor="middle">expediter</text>
+    <circle cx="190" cy="284" r="11" class="node" stroke="var(--s4)"/>
+    <circle cx="190" cy="316" r="11" class="node" stroke="var(--s4)"/>
+    <circle cx="190" cy="348" r="11" class="node" stroke="var(--s4)" stroke-dasharray="4 3"/>
+    <line x1="86" y1="306" x2="172" y2="287" class="edge" stroke="var(--s4)"/>
+    <line x1="86" y1="313" x2="176" y2="316" class="edge" stroke="var(--s4)"/>
+    <line x1="86" y1="320" x2="172" y2="344" class="edge" stroke="var(--s4)" stroke-dasharray="4 3"/>
+    <text x="210" y="352" class="t3 sub">…and a fourth, if it comes to that</text>
+  </g>
+
+  <!-- evaluator-optimizer -->
+  <text x="350" y="248" class="t1 big">Evaluator-optimizer</text>
+  <text x="350" y="263" class="t2 sub">The chef tastes it and sends it back.</text>
+  <g>
+    <circle cx="420" cy="312" r="13" class="node" stroke="var(--s5)"/>
+    <circle cx="545" cy="312" r="13" class="node" stroke="var(--s5)"/>
+    <path d="M 434 305 C 470 288, 500 288, 531 304" class="edge" stroke="var(--s5)" marker-end="url(#ar5)"/>
+    <path d="M 531 320 C 500 336, 470 336, 434 319" class="edge" stroke="var(--s5)" marker-end="url(#ar5b)"/>
+    <defs>
+      <marker id="ar5" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto"><path d="M0,0 L6.5,3.2 L0,6.4 z" fill="var(--s5)"/></marker>
+      <marker id="ar5b" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto"><path d="M0,0 L6.5,3.2 L0,6.4 z" fill="var(--s5)"/></marker>
+    </defs>
+    <text x="420" y="345" class="t2 sub" text-anchor="middle">cook</text>
+    <text x="545" y="345" class="t2 sub" text-anchor="middle">taster</text>
+    <text x="482" y="286" class="t3 sub" text-anchor="middle">plate</text>
+    <text x="482" y="352" class="t3 sub" text-anchor="middle">"again"</text>
+  </g>
+</svg>
+<figcaption><b>The one question that separates all five:</b> was the split decided <i>before</i> service or <i>during</i> it? Before → chaining, routing, parallelization. During → orchestrator-workers. Evaluator-optimizer is the only one with an arrow pointing backwards.</figcaption>
+</figure>
+
+<!-- ============ 4. THE 2x2 ============ -->
+<p class="kicker">Figure 4 · the four ways to build an agent</p>
+<h2>Whose recipe, whose kitchen</h2>
+<p>Two independent questions. And the diagram explains the confusion you've been having — <b>two of the four land in the same square.</b></p>
+
+<figure>
+<svg viewBox="0 0 640 400" role="img" aria-label="Two by two matrix of agent construction approaches">
+  <text x="26" y="24" class="t2 sub" style="font-weight:700">WHOSE KITCHEN (deployment)</text>
+  <line x1="36" y1="34" x2="36" y2="330" class="ax"/>
+  <line x1="36" y1="330" x2="614" y2="330" class="ax"/>
+  <text x="614" y="356" class="t2 sub" style="font-weight:700" text-anchor="end">WHOSE RECIPE (the harness / loop) →</text>
+  <text x="30" y="60" class="t3 sub" text-anchor="end" transform="rotate(-90 30 60)"></text>
+  <text x="150" y="350" class="t3 sub" text-anchor="middle">yours</text>
+  <text x="450" y="350" class="t3 sub" text-anchor="middle">theirs</text>
+  <text x="26" y="110" class="t3 sub" text-anchor="start" opacity="0">x</text>
+
+  <!-- quadrant guides -->
+  <line x1="325" y1="34" x2="325" y2="330" stroke="var(--rule)" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="36" y1="182" x2="614" y2="182" stroke="var(--rule)" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- top-left: empty -->
+  <text x="180" y="105" class="t3 sub" text-anchor="middle">— nobody lives here —</text>
+  <text x="180" y="122" class="t3 sub" text-anchor="middle">no one hosts you without</text>
+  <text x="180" y="136" class="t3 sub" text-anchor="middle">also running the loop</text>
+
+  <!-- top-right: Managed Agents -->
+  <rect x="345" y="62" width="250" height="100" rx="12" fill="var(--s2)" opacity=".14"/>
+  <rect x="345" y="62" width="250" height="100" rx="12" fill="none" stroke="var(--s2)" stroke-width="2"/>
+  <text x="362" y="90" class="t1 big">Managed Agents</text>
+  <text x="362" y="110" class="t2 sub">You order from the restaurant.</text>
+  <text x="362" y="126" class="t2 sub">Their recipe, their kitchen, their</text>
+  <text x="362" y="140" class="t2 sub">walk-in. You just say what you want.</text>
+  <text x="362" y="155" class="t3 sub" style="font-weight:700">the only "theirs / theirs" cell</text>
+
+  <!-- bottom-left: manual loop -->
+  <rect x="56" y="206" width="250" height="100" rx="12" fill="var(--s1)" opacity=".13"/>
+  <rect x="56" y="206" width="250" height="100" rx="12" fill="none" stroke="var(--s1)" stroke-width="2"/>
+  <text x="73" y="234" class="t1 big">Manual loop</text>
+  <text x="73" y="254" class="t2 sub">You cook at home, from your</text>
+  <text x="73" y="268" class="t2 sub">own head. Every step is yours,</text>
+  <text x="73" y="282" class="t2 sub">including the ones you got wrong.</text>
+
+  <!-- bottom-right: THE CONFUSABLE CELL -->
+  <rect x="345" y="196" width="250" height="120" rx="12" fill="var(--s4)" opacity=".2"/>
+  <rect x="345" y="196" width="250" height="120" rx="12" fill="none" stroke="var(--s4)" stroke-width="2.5"/>
+  <text x="362" y="220" class="t1 big">Tool Runner</text>
+  <text x="362" y="236" class="t2 sub">A meal kit — their procedure,</text>
+  <text x="362" y="250" class="t2 sub">your kitchen, only your ingredients.</text>
+  <line x1="362" y1="260" x2="578" y2="260" stroke="var(--s4)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="362" y="279" class="t1 big">Claude Agent SDK</text>
+  <text x="362" y="295" class="t2 sub">A fitted food truck in your drive —</text>
+  <text x="362" y="309" class="t2 sub">their procedure, <tspan style="font-weight:700">and a full tool locker</tspan>.</text>
+
+  <path d="M 608 256 C 632 256, 632 256, 620 256" stroke="var(--s4)" stroke-width="2" fill="none"/>
+  <text x="470" y="386" class="t1 sub" text-anchor="middle" style="font-weight:700;fill:var(--s4)">↑ same square — that's why you keep mixing them up</text>
+</svg>
+<figcaption><b>They differ on tools, not on the 2×2.</b> Tool Runner brings zero built-in tools; the Agent SDK brings the whole Claude Code toolset. Both are harness-only and both leave the hosting to you — so no amount of staring at "who deploys it" will separate them. Ask instead: <i>does it arrive with tools?</i> And note the empty quadrant: nobody supplies your premises without also supplying the loop.</figcaption>
+</figure>
+
+<!-- ============ 5. PLATES ============ -->
+<p class="kicker">Figure 5 · prompt caching</p>
+<h2>Change a plate, lose the stack above it</h2>
+
+<figure>
+<svg viewBox="0 0 640 260" role="img" aria-label="Cache invalidation shown as a stack of plates">
+  <!-- intact stack -->
+  <text x="118" y="22" class="t2 sub" text-anchor="middle" style="font-weight:700">intact — cache hit</text>
+  <ellipse cx="118" cy="74" rx="76" ry="13" fill="var(--s1)" opacity=".9"/>
+  <text x="118" y="79" class="sub" text-anchor="middle" fill="#fff" style="font-weight:700">messages</text>
+  <ellipse cx="118" cy="106" rx="86" ry="13" fill="var(--s1)" opacity=".65"/>
+  <text x="118" y="111" class="sub" text-anchor="middle" fill="#fff" style="font-weight:700">system</text>
+  <ellipse cx="118" cy="138" rx="96" ry="13" fill="var(--s1)" opacity=".4"/>
+  <text x="118" y="143" class="t1 sub" text-anchor="middle" style="font-weight:700">tools</text>
+  <text x="118" y="172" class="t3 sub" text-anchor="middle">changes least at the bottom</text>
+
+  <!-- arrow -->
+  <text x="300" y="104" class="t2" style="font-size:22px" text-anchor="middle">→</text>
+  <text x="300" y="128" class="t3 sub" text-anchor="middle">swap one</text>
+  <text x="300" y="142" class="t3 sub" text-anchor="middle">plate low down</text>
+
+  <!-- broken stack -->
+  <text x="500" y="22" class="t2 sub" text-anchor="middle" style="font-weight:700">changed — everything above falls</text>
+  <ellipse cx="428" cy="52" rx="76" ry="13" fill="var(--dim)" transform="rotate(-18 428 52)"/>
+  <text x="424" y="56" class="t3 sub" text-anchor="middle" transform="rotate(-18 424 56)">messages</text>
+  <ellipse cx="576" cy="60" rx="86" ry="13" fill="var(--dim)" transform="rotate(14 576 60)"/>
+  <text x="576" y="64" class="t3 sub" text-anchor="middle" transform="rotate(14 576 64)">system</text>
+  <ellipse cx="500" cy="138" rx="96" ry="13" fill="var(--s2)"/>
+  <text x="500" y="143" class="sub" text-anchor="middle" fill="#fff" style="font-weight:700">tools ← you touched this</text>
+  <text x="500" y="172" class="t3 sub" text-anchor="middle">nothing below is disturbed</text>
+
+  <line x1="30" y1="200" x2="610" y2="200" stroke="var(--rule)" stroke-width="1"/>
+  <text x="30" y="222" class="t1 sub" style="font-weight:700">The silent killer:</text>
+  <text x="140" y="222" class="t2 sub">a <tspan style="font-family:ui-monospace,Menlo,monospace">datetime.now()</tspan> in the system prompt is a low plate you replace every single request.</text>
+  <text x="30" y="242" class="t2 sub">Hit rate sits at zero and nothing looks wrong. Check <tspan style="font-family:ui-monospace,Menlo,monospace">usage.cache_read_input_tokens</tspan>.</text>
+</svg>
+<figcaption>Order is fixed: <b>tools → system → messages</b>. It's a prefix match, not a lookup — the only question is how far up the stack still matches. The picture carries the ordering and the invalidation. It deliberately carries no prices; those are on the rote sheet, because they move.</figcaption>
+</figure>
+
+<!-- ============ 6. CEILINGS ============ -->
+<p class="kicker">Figure 6 · three ways to run out</p>
+<h2>Told or not told · tokens or dollars</h2>
+
+<figure>
+<svg viewBox="0 0 640 300" role="img" aria-label="Three budget ceilings positioned by whether the model is told and what unit">
+  <line x1="90" y1="40" x2="90" y2="240" class="ax"/>
+  <line x1="90" y1="240" x2="580" y2="240" class="ax"/>
+  <text x="200" y="266" class="t3 sub" text-anchor="middle">model is NOT told</text>
+  <text x="470" y="266" class="t3 sub" text-anchor="middle">model IS told</text>
+  <text x="70" y="90" class="t3 sub" text-anchor="end">dollars</text>
+  <text x="70" y="200" class="t3 sub" text-anchor="end">tokens</text>
+
+  <!-- session budget -->
+  <circle cx="200" cy="92" r="13" fill="var(--s2)"/>
+  <text x="224" y="88" class="t1 lbl">Session budget</text>
+  <text x="224" y="103" class="t2 sub">The card declines. Hard, enforced.</text>
+
+  <!-- max_tokens -->
+  <circle cx="200" cy="196" r="13" fill="var(--s1)"/>
+  <text x="224" y="192" class="t1 lbl" style="font-family:ui-monospace,Menlo,monospace">max_tokens</text>
+  <text x="224" y="207" class="t2 sub">Closing time, unannounced. Cut off mid-word.</text>
+
+  <!-- task budget -->
+  <circle cx="470" cy="196" r="13" fill="var(--s3)"/>
+  <text x="470" y="170" class="t1 lbl" text-anchor="middle">Task budget</text>
+  <text x="470" y="228" class="t2 sub" text-anchor="middle">A per diem, handed over.</text>
+  <text x="470" y="242" class="t2 sub" text-anchor="middle">They pace themselves and land.</text>
+
+  <!-- empty quadrant note -->
+  <text x="470" y="92" class="t3 sub" text-anchor="middle">(nothing here)</text>
+</svg>
+<figcaption>Stem says <b>"paces itself / finishes gracefully"</b> → task budget. <b>"Hard cap / spend limit"</b> → session budget. <b>"Truncated mid-output"</b> → <code>max_tokens</code>. One axis is whether the cook can see the clock.</figcaption>
+</figure>
+
+<!-- ============ 7. WEIGHTS ============ -->
+<p class="kicker">Figure 7 · where the 53 items actually are</p>
+<h2>Study the big bars</h2>
+
+<figure>
+<svg viewBox="0 0 640 300" role="img" aria-label="Bar chart of CCDV-F exam domain weights by percent">
+  <g>
+    <!-- D2 33.1 -->
+    <rect x="150" y="14" width="430" height="22" rx="4" fill="var(--s1)"/>
+    <text x="144" y="30" class="t1 sub" text-anchor="end" style="font-weight:700">D2 Applications</text>
+    <text x="590" y="30" class="t1 sub" style="font-weight:700">33.1%</text>
+    <!-- D5 16.8 -->
+    <rect x="150" y="48" width="218" height="22" rx="4" fill="var(--s1)"/>
+    <text x="144" y="64" class="t1 sub" text-anchor="end" style="font-weight:700">D5 Model / cost</text>
+    <text x="378" y="64" class="t2 sub">16.8%</text>
+    <!-- D1 14.7 -->
+    <rect x="150" y="82" width="191" height="22" rx="4" fill="var(--s1)"/>
+    <text x="144" y="98" class="t1 sub" text-anchor="end" style="font-weight:700">D1 Agents</text>
+    <text x="351" y="98" class="t2 sub">14.7%</text>
+    <!-- D6 11.0 -->
+    <rect x="150" y="116" width="143" height="22" rx="4" fill="var(--s1)"/>
+    <text x="144" y="132" class="t1 sub" text-anchor="end" style="font-weight:700">D6 Context</text>
+    <text x="303" y="132" class="t2 sub">11.0%</text>
+    <!-- D8 10.6 -->
+    <rect x="150" y="150" width="138" height="22" rx="4" fill="var(--s1)"/>
+    <text x="144" y="166" class="t1 sub" text-anchor="end" style="font-weight:700">D8 Tools / MCP</text>
+    <text x="298" y="166" class="t2 sub">10.6%</text>
+    <!-- D7 8.1 -->
+    <rect x="150" y="184" width="105" height="22" rx="4" fill="var(--s1)"/>
+    <text x="144" y="200" class="t1 sub" text-anchor="end" style="font-weight:700">D7 Security</text>
+    <text x="265" y="200" class="t2 sub">8.1%</text>
+    <!-- D3 3.1 -->
+    <rect x="150" y="218" width="40" height="22" rx="4" fill="var(--s1)" opacity=".5"/>
+    <text x="144" y="234" class="t1 sub" text-anchor="end">D3 Claude Code</text>
+    <text x="200" y="234" class="t3 sub">3.1%</text>
+    <!-- D4 2.6 -->
+    <rect x="150" y="252" width="34" height="22" rx="4" fill="var(--s1)" opacity=".5"/>
+    <text x="144" y="268" class="t1 sub" text-anchor="end">D4 Evals</text>
+    <text x="194" y="268" class="t3 sub">2.6%</text>
+  </g>
+  <text x="150" y="294" class="t3 sub">D2 alone is ~18 of 53 items. D3 and D4 together are 3.</text>
+</svg>
+<figcaption>Worth sitting with, because it cuts against instinct: <b>"Claude Code" is 3.1% of a Claude Code certification.</b> The exam is mostly application and integration work — Messages API, streaming, batches, files, errors — and that's the domain with the thinnest video coverage, so it's docs-drilled.</figcaption>
+</figure>
+
+<!-- ============ 8. HOOK VS INJECTION ============ -->
+<p class="kicker">Figure 8 · why the word is "hook"</p>
+<h2>By invitation, or by force</h2>
+
+<figure>
+<svg viewBox="0 0 640 230" role="img" aria-label="Hooks mounted on a wall versus an injection piercing a wall">
+  <!-- left: wall with hooks -->
+  <text x="30" y="20" class="t1 big">Hook — the host mounted it</text>
+  <rect x="30" y="34" width="250" height="128" rx="6" fill="var(--dim)" opacity=".35"/>
+  <g stroke="var(--s1)" stroke-width="3.5" fill="none" stroke-linecap="round">
+    <path d="M 70 62 v 16 a 9 9 0 0 0 16 5"/>
+    <path d="M 145 62 v 16 a 9 9 0 0 0 16 5"/>
+    <path d="M 220 62 v 16 a 9 9 0 0 0 16 5"/>
+  </g>
+  <!-- coat on middle hook -->
+  <path d="M 153 86 c -16 10 -22 34 -18 50 h 36 c 4 -16 -2 -40 -18 -50 z" fill="var(--s1)" opacity=".8"/>
+  <text x="70" y="122" class="t3 sub" text-anchor="middle">empty</text>
+  <text x="228" y="122" class="t3 sub" text-anchor="middle">empty</text>
+  <!-- no hook here -->
+  <g stroke="var(--tx3)" stroke-width="2" stroke-dasharray="4 3">
+    <line x1="95" y1="140" x2="120" y2="140"/>
+  </g>
+  <text x="155" y="182" class="t2 sub" text-anchor="middle">You can only hang where one exists.</text>
+  <text x="155" y="198" class="t1 sub" text-anchor="middle" style="font-weight:700">Finite. Published. Enumerable.</text>
+  <text x="155" y="218" class="t3 sub" text-anchor="middle">→ a made-up event name is wrong by construction</text>
+
+  <!-- right: injection -->
+  <text x="360" y="20" class="t1 big">Injection — you made the hole</text>
+  <rect x="360" y="34" width="250" height="128" rx="6" fill="var(--dim)" opacity=".35"/>
+  <line x1="380" y1="98" x2="500" y2="98" stroke="var(--s2)" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="507" cy="98" r="5" fill="var(--s2)"/>
+  <path d="M 512 98 L 540 98" stroke="var(--s2)" stroke-width="2.5" stroke-dasharray="3 3"/>
+  <circle cx="540" cy="98" r="11" fill="none" stroke="var(--s2)" stroke-width="2.5"/>
+  <line x1="533" y1="91" x2="547" y2="105" stroke="var(--s2)" stroke-width="2.5"/>
+  <line x1="547" y1="91" x2="533" y2="105" stroke="var(--s2)" stroke-width="2.5"/>
+  <text x="485" y="182" class="t2 sub" text-anchor="middle">No invitation. No fixed points.</text>
+  <text x="485" y="198" class="t1 sub" text-anchor="middle" style="font-weight:700">Entry by force.</text>
+  <text x="485" y="218" class="t3 sub" text-anchor="middle">SQL · code · dependency · prompt</text>
+</svg>
+<figcaption><b>The failure boundary, stated plainly:</b> a coat hook explains attachment and fixed position. It does <i>not</i> explain interception — a coat hook stops nobody walking past, and Claude Code hooks can block. For behavior, switch pictures: a checkpoint with a standing order. You own the guard and the written order; the guard doesn't think and can't be argued with.</figcaption>
+</figure>
+
+<!-- ============ 9. FUTURE ============ -->
+<p class="kicker">Figure 9 · not fantasy — just not built yet</p>
+<h2>Where the loop is going</h2>
+<p>You asked about the future as distinct from fantasy. Here's the honest version, and it's the least science-fictional thing on this page.</p>
+
+<figure>
+<svg viewBox="0 0 640 220" role="img" aria-label="The feedback loop from runtime experience back to design-time law, tightening over time">
+  <!-- old loop -->
+  <text x="30" y="20" class="t2 sub" style="font-weight:700">THEN — the loop took a quarter</text>
+  <circle cx="70" cy="66" r="13" fill="var(--s1)"/><text x="70" y="98" class="t3 sub" text-anchor="middle">ship</text>
+  <circle cx="230" cy="66" r="13" fill="var(--s1)"/><text x="230" y="98" class="t3 sub" text-anchor="middle">it hurts</text>
+  <circle cx="390" cy="66" r="13" fill="var(--s1)"/><text x="390" y="98" class="t3 sub" text-anchor="middle">read logs</text>
+  <circle cx="550" cy="66" r="13" fill="var(--s1)"/><text x="550" y="98" class="t3 sub" text-anchor="middle">refactor</text>
+  <line x1="84" y1="66" x2="212" y2="66" class="edge" stroke="var(--s1)" marker-end="url(#ar1)"/>
+  <line x1="244" y1="66" x2="372" y2="66" class="edge" stroke="var(--s1)" marker-end="url(#ar1)"/>
+  <line x1="404" y1="66" x2="532" y2="66" class="edge" stroke="var(--s1)" marker-end="url(#ar1)"/>
+
+  <!-- new loop -->
+  <text x="30" y="142" class="t2 sub" style="font-weight:700">NOW — the loop closes inside one session</text>
+  <circle cx="150" cy="182" r="13" fill="var(--s2)"/><text x="150" y="212" class="t3 sub" text-anchor="middle">run</text>
+  <circle cx="300" cy="182" r="13" fill="var(--s2)"/><text x="300" y="212" class="t3 sub" text-anchor="middle">it hurts</text>
+  <circle cx="450" cy="182" r="13" fill="var(--s2)"/><text x="450" y="212" class="t3 sub" text-anchor="middle">rule rewritten</text>
+  <line x1="164" y1="182" x2="282" y2="182" class="edge" stroke="var(--s2)" marker-end="url(#ar2)"/>
+  <line x1="314" y1="182" x2="432" y2="182" class="edge" stroke="var(--s2)" marker-end="url(#ar2)"/>
+  <path d="M 450 166 C 450 130, 150 130, 150 166" class="edge" stroke="var(--s2)" marker-end="url(#ar2)"/>
+  <text x="300" y="134" class="t2 sub" text-anchor="middle" style="font-weight:700">and the thing inside the run is what rewrites it</text>
+</svg>
+<figcaption>The shift isn't that agents write code. It's that <b>the system now participates in authoring its own constraints</b> — the agent proposes the hook, writes the memory, edits the file that governs its next run. In the old loop a human carried every insight from runtime back to design time, slowly. That carrier is being automated. Everything on the rote sheet will be wrong within a year; this shape won't be.</figcaption>
+</figure>
+
+<footer>
+  Companion to the <a href="./grid.html">metaphor grid</a> and the <a href="./perishables.html">rote sheet</a>.<br>
+  Diagrams follow the validated categorical palette — four slots, contrast-relieved with direct labels, dark mode stepped rather than flipped.<br>
+  Snapshot 2026-09-19.
+</footer>
+
+</div>
+</body>
+</html>
