@@ -173,6 +173,8 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
     else if(c==='pause'){ post({event:'command',func:'pauseVideo',args:[]}); }
     else if(c==='restart'){ post({event:'command',func:'seekTo',args:[SEGS[st.cur].s,true]}); post({event:'command',func:'playVideo',args:[]}); }
     else if(c==='reset'){ st.done={}; save(); load(0,false); }
+    else if(c==='rewind'){ post({event:'command',func:'seekTo',args:[SEGS[st.cur].s,true]}); }
+    else if(c.indexOf('seek:')===0){ var d=parseInt(c.slice(5),10)||0; var g0=SEGS[st.cur]; var tt=Math.min(g0.e-1,Math.max(g0.s,live.t+d)); post({event:'command',func:'seekTo',args:[tt,true]}); }
     else if(c.indexOf('jump:')===0){ var n=parseInt(c.slice(5),10); if(n>=1&&n<=SEGS.length) load(n-1,true); }
     setTimeout(function(){publish(true);},800);
   }

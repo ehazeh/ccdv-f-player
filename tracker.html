@@ -27,7 +27,13 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
 .now .st{font-family:"IBM Plex Mono",monospace;font-size:12px;opacity:.8;margin-top:6px}
 .bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .5s linear}
-.ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ctl{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px}
+.ctl2{grid-template-columns:1fr 1fr}
+.ctl2 button{padding:10px 6px;font-size:14px;font-weight:500}
+.tot{display:flex;gap:8px}
+.tot div{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.tot b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-variant-numeric:tabular-nums}
+.tot span{font-size:12px;color:var(--ink-3)}
 .ctl button{font:inherit;font-weight:600;font-size:15px;padding:14px 6px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
 .ctl button.primary{background:var(--accent);color:#0B1016;border-color:transparent}
 .list{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:6px}
@@ -53,10 +59,11 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
   <div class="head"><div><h1>CCDV-F Tracker</h1><div class="mono" style="color:var(--ink-3)" id="status">connecting…</div></div><div class="dot" id="dot"></div></div>
   <div class="now"><div class="lbl" id="lbl">Now</div><div class="big" id="left">—</div><div class="t" id="title">Waiting for the player…</div><div class="why" id="why"></div><div class="st" id="st"></div></div>
   <div class="bar"><i id="bar"></i></div>
-  <div class="ctl"><button data-cmd="prev">Prev</button><button data-cmd="play" class="primary" id="pp">Play</button><button data-cmd="next">Next</button><button data-cmd="restart">Restart</button></div>
+  <div class="tot"><div><b id="tot-left">—</b><span>total left, all segments</span></div><div><b id="tot-done">—</b><span>segments done</span></div></div>
+  <div class="ctl"><button data-cmd="restart">⟲ Start</button><button data-cmd="play" class="primary" id="pp">Play</button><button data-cmd="next">End ⟶</button></div><div class="ctl ctl2"><button data-cmd="prev">‹ Prev segment</button><button data-cmd="next">Next segment ›</button></div>
 </div>
 <div id="list"></div>
-<div class="note">Live from the player on the Mac. Buttons send commands to it. Time left keeps counting between updates.</div>
+<div class="note">Live from the player on the Mac. ⟲ Start rewinds to the beginning of the current segment. End ⟶ marks it done and moves on. Time left keeps counting between updates.</div>
 </div>
 <script>
 (function(){
@@ -113,6 +120,10 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
     document.getElementById('pp').setAttribute('data-cmd',(last.state===1)?'pause':'play');
     var total=(last.e-last.s)||1; document.getElementById('bar').style.width=Math.min(100,Math.max(0,100*(1-remain/total)))+'%';
     var done={}; (last.done||[]).forEach(function(id){done[id]=true;});
+    var tot=remain; var nd=0;
+    SEGS.forEach(function(g,i){ if(done[g.id]) nd++; if(i!==last.i && !done[g.id]) tot+=(g.e-g.s); });
+    var tm=Math.round(tot/60); document.getElementById('tot-left').textContent=(tm>=60?Math.floor(tm/60)+'h '+(tm%60)+'m':tm+' min');
+    document.getElementById('tot-done').textContent=nd+' / '+SEGS.length;
     SEGS.forEach(function(g,i){var li=document.getElementById('row-'+i); li.classList.toggle('cur',i===last.i); li.classList.toggle('done',!!done[g.id]);});
   }
   setInterval(render,500);
