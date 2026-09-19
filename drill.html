@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17181a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f9f9f8" media="(prefers-color-scheme: light)">
+<title>CCDV-F Drill — weak areas</title>
+<style>
+:root{--paper:#f9f9f8;--ink:#1a1c1e;--muted:#63696f;--rule:#e2e4e6;--card:#fff;
+ --accent:#4a3aa7;--soft:#ecebf7;--ok:#1baf7a;--bad:#e34948;--warn:#eb6834}
+@media (prefers-color-scheme:dark){:root{--paper:#17181a;--ink:#e8eaec;--muted:#8f969d;
+ --rule:#2e3134;--card:#202225;--accent:#9085e9;--soft:#262340;--ok:#199e70;--bad:#e66767;--warn:#d95926}}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,sans-serif;padding-bottom:4rem}
+.wrap{max-width:740px;margin:0 auto;padding:0 1.15rem}
+header{padding:2.3rem 0 1.1rem;border-bottom:1px solid var(--rule)}
+h1{font:600 1.7rem/1.2 "New York",Georgia,serif;margin:0 0 .45rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:.86rem;margin:0}
+.swap{display:inline-block;margin:.9rem .9rem 0 0;font-size:.8rem;font-weight:600;color:var(--accent);text-decoration:none}
+.timer{background:var(--soft);border-radius:11px;padding:.85rem 1rem;margin:1.3rem 0;font-size:.88rem}
+.timer b{color:var(--accent)}
+.q{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.05rem 1.1rem;margin:1.1rem 0}
+.n{font:800 .68rem/1 -apple-system,sans-serif;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.stem{margin:.55rem 0 .8rem;font-size:.96rem}
+.ask{font-weight:700;margin:.8rem 0 .6rem;font-size:.95rem}
+ol.opts{list-style:upper-alpha;padding-left:1.4rem;margin:0}
+ol.opts li{margin:.4rem 0;font-size:.93rem}
+details{margin-top:.95rem;border-top:1px solid var(--rule);padding-top:.7rem}
+summary{cursor:pointer;font-weight:700;font-size:.84rem;color:var(--accent);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";}
+details[open] summary::before{content:"▾ ";}
+.key{margin-top:.7rem;font-size:.88rem}
+.correct{color:var(--ok);font-weight:800}
+.why{margin:.5rem 0}
+.dis{margin:.45rem 0 0;padding-left:.8rem;border-left:2px solid var(--rule);color:var(--muted);font-size:.85rem}
+.rot{margin-top:.7rem;background:var(--soft);border-radius:8px;padding:.55rem .7rem;font-size:.85rem}
+.rot b{color:var(--accent)}
+.found{background:var(--card);border:2px solid var(--warn);border-radius:14px;padding:1rem 1.1rem;margin:1.3rem 0}
+.found h3{margin:.2rem 0 .6rem;font-size:1rem;color:var(--warn)}
+.found li{font-size:.9rem;margin:.5rem 0}
+code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--soft);padding:.1em .34em;border-radius:4px}
+h2{font:600 1.15rem/1.25 "New York",Georgia,serif;margin:2.4rem 0 .3rem}
+.dom{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:800}
+footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--rule);color:var(--muted);font-size:.78rem}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Weak-area drill</h1>
+  <p class="sub">16 items · 1.2 Agent construction · 1.3 Agent patterns · 5.4 Cost &amp; caching · 7.3 Hooks</p>
+  <a class="swap" href="./grid.html">Metaphor grid →</a>
+  <a class="swap" href="./visuals.html">Seeing it →</a>
+  <a class="swap" href="./perishables.html">Perishables →</a>
+</header>
+
+<div class="timer">
+  <b>Budget: 36 minutes</b> (16 × 2:15, the real per-item pace). Answer all before opening any key — reading one key teaches you the pattern for the next item and inflates your score.
+</div>
+
+<div class="found">
+  <h3>⚠ What this drill already caught</h3>
+  <p style="font-size:.9rem;margin:.3rem 0 .5rem">Three items broke the grid as originally written. All three are now fixed there — but these are the spots where <i>your</i> understanding is most likely thin, so read them after you've scored:</p>
+  <ul>
+    <li><b>Q2 — hooks are not "always shell commands."</b> The grid overclaimed. The <i>firing</i> is deterministic; the <i>verdict</i> can be delegated to a <code>prompt</code> or <code>agent</code> handler that actually judges.</li>
+    <li><b>Q9 — the grid gave no reason to ever hand-write the loop.</b> Tool Runner already ships approval gates and error interception via per-turn hooks, so "I need an approval gate" is not the answer.</li>
+    <li><b>Q15 — the plate stack and the operator channel were filed in different domains</b> and never connected, though they're one mechanism.</li>
+  </ul>
+</div>
+
+<h2>7.3 · Hooks</h2>
+
+<div class="q">
+  <p class="n">Item 1 <span class="dom">· D7</span></p>
+  <p class="stem">A team runs Claude Code unattended in CI. Policy requires that any Bash invocation matching a deny-list never executes, and no human is available to approve or reject anything during the run.</p>
+  <p class="ask">Which mechanism enforces this?</p>
+  <ol class="opts">
+    <li>A <code>PreToolUse</code> hook that exits 2</li>
+    <li>A permission prompt configured to auto-deny</li>
+    <li>A prohibition written into <code>CLAUDE.md</code></li>
+    <li>An inference hook registered on the <code>prompt</code> event</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D7 / 7.3 — exit 2 is a blocking error on a blocking-capable event, and the hook fires whether or not anyone is watching.</p>
+    <p class="dis"><b>B</b> — permission prompts are the interactive approval path. Headless means no Operator seat exists to prompt.</p>
+    <p class="dis"><b>C</b> — CLAUDE.md is context the model reads. That's persuasion, not enforcement.</p>
+    <p class="dis"><b>D</b> — inference hooks are server-side and Enterprise-only, fire only on prompt, and never see a tool call.</p>
+    <p class="rot"><b>Rule:</b> unattended + must-never-happen = Architect-seat hook, never Operator-seat permission.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 2 <span class="dom">· D7</span></p>
+  <p class="stem">A developer is reviewing a colleague's description of how Claude Code hooks work before signing off on a security design.</p>
+  <p class="ask">Which statement is accurate?</p>
+  <ol class="opts">
+    <li>Every handler is a shell command, so a hook can never invoke a model</li>
+    <li>Handler types include <code>command</code>, <code>http</code>, <code>mcp_tool</code>, <code>prompt</code>, and <code>agent</code></li>
+    <li>Handler types include <code>command</code>, <code>http</code>, and <code>function</code> (a TypeScript module)</li>
+    <li>The harness selects the handler type automatically based on the event</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">B</span> · D7 / 7.3 — five handler types, and two of them delegate the decision to a model.</p>
+    <p class="dis"><b>A</b> — the common overstatement, and the one the grid itself got wrong. <code>prompt</code> and <code>agent</code> handlers judge.</p>
+    <p class="dis"><b>C</b> — "function"/module handlers are a GitHub proposal, not shipped. Classic fake-mechanism distractor.</p>
+    <p class="dis"><b>D</b> — you declare the handler.</p>
+    <p class="rot"><b>Rule:</b> the <i>firing</i> is deterministic; the <i>verdict</i> need not be. The checkpoint always stops you — who staffs it is your choice.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 3 <span class="dom">· D7</span></p>
+  <p class="stem">A team wants a log line written every time the agent edits a file. The edit itself must proceed unchanged.</p>
+  <p class="ask">Which fits?</p>
+  <ol class="opts">
+    <li>A <code>PostToolUse</code> hook</li>
+    <li>A <code>PreToolUse</code> hook returning exit 2</li>
+    <li>A permission prompt</li>
+    <li>Context editing</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D7 / 7.3 — observe after the fact, change nothing.</p>
+    <p class="dis"><b>B</b> — exit 2 blocks, which the stem forbids.</p>
+    <p class="dis"><b>C</b> — inserts a human and can change the outcome.</p>
+    <p class="dis"><b>D</b> — clears tool results from context; nothing to do with logging.</p>
+    <p class="rot"><b>Rule:</b> gate before = PreToolUse. Observe after = PostToolUse.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 4 <span class="dom">· D7</span></p>
+  <p class="stem">An enterprise must allow or deny every prompt submitted across the organization, enforced centrally on the server, with a binary verdict, regardless of which client the developer uses.</p>
+  <p class="ask">Which mechanism?</p>
+  <ol class="opts">
+    <li>Inference hooks</li>
+    <li>A <code>UserPromptSubmit</code> hook in <code>settings.json</code></li>
+    <li>Permission modes</li>
+    <li>A <code>PreToolUse</code> hook</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D7 / 7.1 vs 7.3 — server-side, Enterprise, only event is prompt, verdict binary, cannot rewrite.</p>
+    <p class="dis"><b>B</b> — client-side and per-machine. A developer using a different client bypasses it entirely.</p>
+    <p class="dis"><b>C</b> — governs tool approvals, not prompt admission.</p>
+    <p class="dis"><b>D</b> — tool-scoped, and also client-side.</p>
+    <p class="rot"><b>Rule:</b> "server-side + every prompt + binary + enterprise" = inference hooks. Different product that shares a word.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 5 <span class="dom">· D7</span></p>
+  <p class="stem">A hook must return a structured decision — a denial carrying a reason the model can read — rather than a bare pass/fail.</p>
+  <p class="ask">How?</p>
+  <ol class="opts">
+    <li>Exit 0 and emit JSON on stdout</li>
+    <li>Exit 2</li>
+    <li>Exit 1</li>
+    <li>Set a decision field in <code>settings.json</code></li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D7 / 7.3</p>
+    <p class="dis"><b>B</b> — exit 2 is the blocking error: it stops the call but isn't the structured channel.</p>
+    <p class="dis"><b>C</b> — a non-blocking error.</p>
+    <p class="dis"><b>D</b> — settings.json registers hooks; it doesn't carry per-invocation verdicts.</p>
+    <p class="rot"><b>Rule:</b> exit 2 = block. Exit 0 + JSON = decide, with reasons.</p>
+  </div></details>
+</div>
+
+<h2>1.2 · Agent construction</h2>
+
+<div class="q">
+  <p class="n">Item 6 <span class="dom">· D1</span></p>
+  <p class="stem">A team needs an agent that fires nightly on a schedule, keeps a workspace with file state across runs, and whose configuration is versioned so each session pins to a known version.</p>
+  <p class="ask">Which is the lowest-complexity option that meets all three?</p>
+  <ol class="opts">
+    <li>Managed Agents with a scheduled deployment</li>
+    <li>The Claude Agent SDK on a cron job on their own VM</li>
+    <li>The Tool Runner invoked from a scheduled function</li>
+    <li>A manual loop with state persisted to object storage</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D1 / 1.2 — scheduling, persistence and versioning are all <i>deployment</i> concerns, and Managed Agents is the only option that supplies deployment.</p>
+    <p class="dis"><b>B, C, D</b> — all three are harness-only. Each leaves you owning the scheduler, the workspace and the config store. They're not wrong mechanisms, they're more work.</p>
+    <p class="rot"><b>Rule:</b> "theirs" to both questions — whose loop, whose premises — is Managed Agents alone.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 7 <span class="dom">· D1</span></p>
+  <p class="stem">An architect is classifying the options by what infrastructure the team will still have to own.</p>
+  <p class="ask">Which TWO supply a harness but leave deployment to you? (Select TWO)</p>
+  <ol class="opts">
+    <li>The Tool Runner</li>
+    <li>Managed Agents</li>
+    <li>The Claude Agent SDK</li>
+    <li>The Messages API with no tools declared</li>
+    <li>Inference hooks</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A and C</span> · D1 / 1.2</p>
+    <p class="dis"><b>B</b> — supplies harness <i>and</i> deployment. That's the whole distinction.</p>
+    <p class="dis"><b>D</b> — a single call is not a harness at all; there's no loop.</p>
+    <p class="dis"><b>E</b> — a security mechanism, not an agent-construction surface.</p>
+    <p class="rot"><b>Rule:</b> A and C share a quadrant. That shared square is exactly why they're confusable.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 8 <span class="dom">· D1</span></p>
+  <p class="stem">A team wants a coding agent with built-in file read/write/edit, bash, and grep, running on infrastructure they control.</p>
+  <p class="ask">Which?</p>
+  <ol class="opts">
+    <li>The Claude Agent SDK</li>
+    <li>The Tool Runner</li>
+    <li>Managed Agents</li>
+    <li>The Messages API with the Anthropic-defined bash tool</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D1 / 1.2 — the Agent SDK is Claude Code as a library: full harness plus the built-in toolset, hosted by you.</p>
+    <p class="dis"><b>B</b> — same quadrant, but it ships <i>zero</i> built-in tools. You'd write every one.</p>
+    <p class="dis"><b>C</b> — hosts it for you, which the stem rules out.</p>
+    <p class="dis"><b>D</b> — the bash tool is real and schema-less, but you'd still hand-write the loop and every other tool.</p>
+    <p class="rot"><b>Rule:</b> when two options sit in the same 2×2 square, the tiebreak is <i>does it arrive with tools?</i></p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 9 <span class="dom">· D1</span></p>
+  <p class="stem">A team is deciding whether to hand-write the agent loop instead of using the Tool Runner.</p>
+  <p class="ask">Which is a valid reason to hand-write it?</p>
+  <ol class="opts">
+    <li>The required control flow doesn't fit the Tool Runner's per-turn hooks, or they won't take a beta dependency</li>
+    <li>They need built-in filesystem tools</li>
+    <li>They need Anthropic to host the tool-execution sandbox</li>
+    <li>They need an approval gate before each tool executes</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D1 / 1.2 &amp; 2.4</p>
+    <p class="dis"><b>D</b> — the trap, and the one the grid originally failed. Per-turn hooks in the Tool Runner already give approval gates, logging, error interception, result modification and retries. Wanting a gate is <i>not</i> a reason to hand-roll.</p>
+    <p class="dis"><b>B</b> — that's the Agent SDK.</p>
+    <p class="dis"><b>C</b> — that's Managed Agents.</p>
+    <p class="rot"><b>Rule:</b> hand-rolling buys control flow, not features. If you can name the feature you want, the Tool Runner probably has it.</p>
+  </div></details>
+</div>
+
+<h2>1.3 · Agent patterns</h2>
+
+<div class="q">
+  <p class="n">Item 10 <span class="dom">· D1</span></p>
+  <p class="stem">Incoming support tickets must be classified and then handled by one of four specialized prompts. The four categories are known, stable, and unlikely to change.</p>
+  <p class="ask">Which pattern?</p>
+  <ol class="opts"><li>Routing</li><li>Orchestrator-workers</li><li>Parallelization</li><li>Evaluator-optimizer</li></ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D1 / 1.3 — known set, exactly one branch taken.</p>
+    <p class="dis"><b>B</b> — decomposition decided at run time. Here it's fixed in advance.</p>
+    <p class="dis"><b>C</b> — known set, but <i>all</i> branches fire.</p>
+    <p class="dis"><b>D</b> — requires a critique loop; there isn't one.</p>
+    <p class="rot"><b>Rule:</b> known options + pick one = routing. Known options + do all = parallelization.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 11 <span class="dom">· D1</span></p>
+  <p class="stem">A research task must be broken into subtasks that cannot be enumerated ahead of time — their number and nature depend on what earlier steps turn up.</p>
+  <p class="ask">Which pattern?</p>
+  <ol class="opts"><li>Orchestrator-workers</li><li>Routing</li><li>Prompt chaining</li><li>Parallelization</li></ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D1 / 1.3 — "cannot be enumerated ahead of time" is the giveaway: the split happens at run time.</p>
+    <p class="dis"><b>B, C, D</b> — all three require the shape to be known before the run. Each is a workflow, not an agent.</p>
+    <p class="rot"><b>Rule:</b> decomposition before the run → workflow. During the run → orchestrator-workers. This is the Architect/Operator line.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 12 <span class="dom">· D1</span></p>
+  <p class="stem">A translation is drafted, scored against a rubric, and revised — repeating until it clears the bar.</p>
+  <p class="ask">Which pattern?</p>
+  <ol class="opts"><li>Evaluator-optimizer</li><li>Prompt chaining</li><li>Orchestrator-workers</li><li>Routing</li></ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D1 / 1.3 — the only pattern with an arrow pointing backwards.</p>
+    <p class="dis"><b>B</b> — sequential but one-pass; nothing returns.</p>
+    <p class="dis"><b>C</b> — delegates outward; doesn't critique its own output against a bar.</p>
+    <p class="dis"><b>D</b> — dispatch, no loop.</p>
+    <p class="rot"><b>Rule:</b> a critique that feeds back = evaluator-optimizer. Draw it: it's the only cycle.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 13 <span class="dom">· D1</span></p>
+  <p class="stem">A team is documenting whether a given design is a workflow or an agent.</p>
+  <p class="ask">Which TWO indicate a workflow? (Select TWO)</p>
+  <ol class="opts">
+    <li>The sequence of steps is fixed before the run</li>
+    <li>The model chooses which tools to call, and when</li>
+    <li>Each step's output feeds the next, wired in code</li>
+    <li>The number of iterations depends on what the model finds</li>
+    <li>The task is open-ended and hard to fully specify</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A and C</span> · D1 / 1.1 &amp; 1.3 — both describe paths laid down in advance.</p>
+    <p class="dis"><b>B, D, E</b> — all three hand path-selection to the model at run time. That's the definition of an agent.</p>
+    <p class="rot"><b>Rule:</b> the train runs on rails you laid. The taxi picks the route. Ask only: <i>who chooses the next step?</i></p>
+  </div></details>
+</div>
+
+<h2>5.4 · Cost and token management</h2>
+
+<div class="q">
+  <p class="n">Item 14 <span class="dom">· D5</span></p>
+  <p class="stem">A service makes many near-identical requests. The system prompt is a frozen constant and the messages differ only in the final user turn, yet <code>cache_read_input_tokens</code> is zero on every request. The tool list is serialized from a dictionary at call time.</p>
+  <p class="ask">What is the most likely cause?</p>
+  <ol class="opts">
+    <li>Tool serialization order varies between requests, invalidating everything after it</li>
+    <li>The final user turn differs, which invalidates the prefix</li>
+    <li>Four breakpoints is not enough for this request shape</li>
+    <li>Caching requires the beta header and it isn't set</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D5 / 5.4 — <code>tools</code> renders first. A nondeterministic tool order changes the lowest plate on every request, so nothing above it can ever match.</p>
+    <p class="dis"><b>B</b> — messages render last. A varying final turn is normal and is exactly what you want <i>above</i> the breakpoint.</p>
+    <p class="dis"><b>C</b> — the 4-breakpoint cap is real, but exceeding it isn't what drives a rate to zero.</p>
+    <p class="dis"><b>D</b> — prompt caching is not gated behind a beta header.</p>
+    <p class="rot"><b>Rule:</b> rate at zero → suspect the lowest plate. Order is <code>tools → system → messages</code>.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 15 <span class="dom">· D5</span></p>
+  <p class="stem">Midway through a long conversation, an operator instruction must be added. The cached prefix must survive, and the instruction must not be reachable by content in the conversation.</p>
+  <p class="ask">Which approach?</p>
+  <ol class="opts">
+    <li>Append a <code>system</code>-role message to the <code>messages</code> array</li>
+    <li>Edit the top-level <code>system</code> field</li>
+    <li>Add another <code>cache_control</code> breakpoint</li>
+    <li>Enable context editing to clear older turns first</li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D5 / 5.4 &amp; D7 / 7.1 — a mid-conversation system message is a new plate <i>on top</i>. It preserves the cached prefix and is the injection-safe operator channel.</p>
+    <p class="dis"><b>B</b> — <code>system</code> renders below <code>messages</code>. Editing it drops everything above. Same instruction, opposite cache outcome.</p>
+    <p class="dis"><b>C</b> — breakpoints mark what to cache; they don't protect a prefix you just changed.</p>
+    <p class="dis"><b>D</b> — clears tool results and thinking. Doesn't add an instruction.</p>
+    <p class="rot"><b>Rule:</b> add a plate on top; never swap one underneath. One mechanism answers both the caching question and the injection question.</p>
+  </div></details>
+</div>
+
+<div class="q">
+  <p class="n">Item 16 <span class="dom">· D5</span></p>
+  <p class="stem">An agentic loop must wind up cleanly inside a token allowance — summarizing and concluding rather than stopping mid-output.</p>
+  <p class="ask">Which mechanism?</p>
+  <ol class="opts">
+    <li>A task budget in <code>output_config</code></li>
+    <li>A lower <code>max_tokens</code></li>
+    <li>A Managed Agents session budget</li>
+    <li><code>effort: "low"</code></li>
+  </ol>
+  <details><summary>Answer</summary><div class="key">
+    <p><span class="correct">A</span> · D5 / 5.4 — the server injects a countdown the model can see, so it paces itself and lands. Advisory, token-denominated.</p>
+    <p class="dis"><b>B</b> — an enforced per-response ceiling the model is <i>not</i> aware of. It truncates, which is precisely what the stem rules out.</p>
+    <p class="dis"><b>C</b> — real, but dollar-denominated, hard, platform-enforced, and Managed Agents only. It stops you; it doesn't help you finish.</p>
+    <p class="dis"><b>D</b> — reduces thinking depth and spend but sets no ceiling and produces no graceful landing.</p>
+    <p class="rot"><b>Rule:</b> two axes — is the model told, and what unit? Told + tokens = task budget.</p>
+  </div></details>
+</div>
+
+<footer>
+  16 items · self-administered 2026-09-19 against the <a href="./grid.html">metaphor grid</a>; three defects found and fixed there.<br>
+  Items are original and written to the official blueprint's distractor rules. Verify any specific against the official docs before trusting it.<br>
+  Scoring proxy: 13/16 or better puts you near the ~72% working pass line — but this drill is deliberately weighted to your four weak skills, so it reads harder than the real 53.
+</footer>
+
+</div>
+</body>
+</html>

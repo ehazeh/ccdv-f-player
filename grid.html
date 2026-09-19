@@ -119,6 +119,7 @@ code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--a
 </div>
 
 <nav><div class="pills">
+  <a href="./drill.html" style="color:#4a3aa7;border-color:#4a3aa7">Drill →</a>
   <a href="./visuals.html" style="color:#2a78d6;border-color:#2a78d6">Seeing it →</a>
   <a href="./perishables.html" style="color:#b4472b;border-color:#b4472b">Perishables →</a>
   <a href="#how">How to read</a>
@@ -203,6 +204,7 @@ code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--a
     <p class="meta" style="margin-top:.7rem">Manual loop — you built the ship and you're flying it. Tool Runner — borrowed autopilot in your own ship, no tools aboard but the ones you bolted on. Managed Agents — you booked passage: their ship, their pilot, their cargo hold. Agent SDK — a fully fitted ship delivered to your hangar; you pay the berth.</p>
     <p class="disc"><b>Managed Agents is the only one that answers “theirs” to both.</b> Stem mentions hosting, per-session containers, persistence, versioning or scheduling → Managed Agents. Stem mentions <i>only</i> not wanting to write the loop → Tool Runner.</p>
   </div>
+  <div class="note"><b>Why hand-write the loop at all?</b> The Tool Runner already gives you <b>per-turn hooks</b> — approval gates, logging, error interception, result modification, retries, streaming, compaction. So “I need an approval gate before tools run” is <i>not</i> a reason to hand-roll. The real reasons are narrow: a control flow those hooks don't fit, or refusing a beta dependency.</div>
   <div class="note"><b>Tool Runner ≠ Agent SDK.</b> Tool Runner lives inside the regular Anthropic SDK (<code>client.beta.messages.tool_runner</code>) and has <i>zero</i> built-in tools. The Agent SDK is Claude Code as a library, with the full built-in toolset. Both are harness-only. This confusion is a designed distractor.</div>
 
   <h3>1.3 Agent patterns · weak area</h3>
@@ -330,6 +332,7 @@ code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--a
       <li>It is a <b>prefix match, not a lookup</b> — only “how far up does the stack still match.”</li>
       <li>Hit rate stuck at zero? Something near the bottom is being quietly swapped every request — a <code>datetime.now()</code> in the system prompt, an unsorted tool list. Verify with <code>usage.cache_read_input_tokens</code>.</li>
     </ol>
+    <p class="meta" style="margin-top:.7rem"><b>5 · It gives you the cache-safe way to add a mid-conversation instruction.</b> A mid-conversation system message goes into <code>messages[]</code> — a <b>new plate on top</b>. Editing the top-level <code>system</code> field is <b>swapping a lower plate</b>, which drops everything above. Same instruction, opposite cache outcome — and it's the same mechanism as the injection-safe operator channel in 7.1.</p>
     <p class="disc">Plates carry <i>ordering and invalidation only</i>. Price, TTL and breakpoint count are perishable — flashcard, not metaphor.</p>
   </div>
 
@@ -389,7 +392,12 @@ code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--a
     An <b>injection</b> creates its own entry — the injector supplies both the substance <i>and</i> the opening; the target never offered one. Hence SQL injection, code injection, dependency injection. Entry <b>by force</b>.</p>
     <p class="disc">Because the host mounts the hooks, the set of events and handler types must be <b>finite, published and enumerable</b>. So an option naming a hook event or handler type that doesn't exist is a distractor <i>by construction</i> — a “cron hook event” is fake; “function”/“module” handler types are a proposal, not shipped.</p>
   </div>
-  <div class="note"><b>Failure boundary.</b> A coat hook explains attachment and fixed position. It does <i>not</i> explain <b>interception</b> — a coat hook doesn't stop anyone walking past, and hooks can block. For behavior switch images: <b>a checkpoint with a standing order</b>. You don't own the road or the traveler. You own the guard you posted and the written order the guard executes. The guard does not think and cannot be argued with.</div>
+  <div class="note"><b>Failure boundary.</b> A coat hook explains attachment and fixed position. It does <i>not</i> explain <b>interception</b> — a coat hook doesn't stop anyone walking past, and hooks can block. For behavior switch images: <b>a checkpoint you cannot walk past</b>.</div>
+  <div class="card weak">
+    <p class="term">What exactly is deterministic <span class="chip k3">K3</span></p>
+    <p class="meta">The <b>firing</b> is deterministic — the hook runs at that point every time, and the model can't talk it out of running. The <b>verdict</b> need not be. Handler types are <code>command</code>, <code>http</code>, <code>mcp_tool</code>, <code>prompt</code>, <code>agent</code> — and <code>prompt</code>/<code>agent</code> hand the decision to something that judges.</p>
+    <p class="disc">The checkpoint always exists and always stops you. <b>Who staffs it is your choice</b> — a rule-follower reading a written order, or a judge you posted there. An option claiming hooks are “always shell commands” is wrong.</p>
+  </div>
   <div class="card weak">
     <p class="term">PreToolUse vs. PermissionRequest</p>
     <div class="grid2">
