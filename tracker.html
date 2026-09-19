@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>CCDV-F Tracker</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#0F141B;--surface:#161C25;--surface-2:#1E2631;--line:#2C3644;--ink:#E6EAF0;--ink-2:#B3BCC8;--ink-3:#7F8A99;--accent:#4FB8B2;--accent-ink:#8ED9D4;--accent-soft:#143634;--done:#5A6473;--warn:#E5A94B}
+@media (prefers-color-scheme:light){:root{--bg:#F5F6F8;--surface:#FFFFFF;--surface-2:#EDEFF3;--line:#D8DCE3;--ink:#1A2230;--ink-2:#4A5568;--ink-3:#7B8794;--accent:#0F6E6A;--accent-ink:#0B5552;--accent-soft:#D9EEEC;--done:#8A94A3;--warn:#9A5B00}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.4;padding-inline:16px;padding-block:env(safe-area-inset-top,0) 40px}
+.wrap{max-width:640px;margin:0 auto}
+h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;margin:0;line-height:1.1}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:12px 10px;display:flex;flex-direction:column;gap:10px}
+.head{display:flex;align-items:center;gap:12px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--done);margin-left:auto}
+.dot.live{background:var(--accent)}
+.now{background:var(--accent-soft);border-radius:14px;padding:14px 16px;color:var(--accent-ink)}
+.now .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+.now .big{font-family:"Bricolage Grotesque",sans-serif;font-size:44px;font-weight:700;line-height:1;margin:4px 0;font-variant-numeric:tabular-nums}
+.now .t{font-weight:600;font-size:16px}
+.now .why{font-size:13.5px;opacity:.9;margin-top:2px}
+.now .st{font-family:"IBM Plex Mono",monospace;font-size:12px;opacity:.8;margin-top:6px}
+.bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .5s linear}
+.ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ctl button{font:inherit;font-weight:600;font-size:15px;padding:14px 6px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.ctl button.primary{background:var(--accent);color:#0B1016;border-color:transparent}
+.list{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.seg.cur{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.seg .chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:13px;color:#0B1016}
+.seg.done .chk{background:var(--accent);border-color:var(--accent)}
+.seg .body{flex:1 1 auto;min-width:0}
+.seg .t{font-weight:600;font-size:15px;line-height:1.3}
+.seg .ts{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent-ink)}
+.seg .dom{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);margin-left:6px}
+.seg .d{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);flex:0 0 auto}
+.seg.done .t{color:var(--done);text-decoration:line-through}
+.dh{margin-top:16px;padding-bottom:4px;border-bottom:2px solid var(--line);display:flex;gap:8px;align-items:baseline}
+.dh .code{font-family:"IBM Plex Mono",monospace;color:var(--accent-ink);font-size:13px}
+.dh h2{font-family:"Bricolage Grotesque",sans-serif;font-size:16px;margin:0}
+.note{margin-top:14px;font-size:12.5px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <div class="head"><div><h1>CCDV-F Tracker</h1><div class="mono" style="color:var(--ink-3)" id="status">connecting…</div></div><div class="dot" id="dot"></div></div>
+  <div class="now"><div class="lbl" id="lbl">Now</div><div class="big" id="left">—</div><div class="t" id="title">Waiting for the player…</div><div class="why" id="why"></div><div class="st" id="st"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="ctl"><button data-cmd="prev">Prev</button><button data-cmd="play" class="primary" id="pp">Play</button><button data-cmd="next">Next</button><button data-cmd="restart">Restart</button></div>
+</div>
+<div id="list"></div>
+<div class="note">Live from the player on the Mac. Buttons send commands to it. Time left keeps counting between updates.</div>
+</div>
+<script>
+(function(){
+  var TOPIC='ccdv-b0324c76cff0';
+  var SEGS=[
+    {id:'s-d1-1',dom:'1.1',t:'Advisors at GitHub scale',s:842,e:1078,D:'D1',DN:'Agents and Workflows'},
+    {id:'s-d1-2',dom:'1.2',t:'Managed Agents',s:257,e:440,D:'D1'},
+    {id:'s-d1-3',dom:'1.2',t:'Managed Agents',s:628,e:703,D:'D1'},
+    {id:'s-d1-4',dom:'1.3',t:'Memory and dreaming',s:277,e:435,D:'D1'},
+    {id:'s-d2-1',dom:'2.3',t:'More out of the Claude Platform',s:122,e:290,D:'D2',DN:'Applications and Integration'},
+    {id:'s-d2-3',dom:'2.3',t:'More out of the Claude Platform',s:874,e:1050,D:'D2'},
+    {id:'s-d2-2',dom:'2.5',t:'More out of the Claude Platform',s:597,e:874,D:'D2'},
+    {id:'s-d3-1',dom:'3.1',t:"What's new in Claude Code",s:676,e:735,D:'D3',DN:'Claude Code'},
+    {id:'s-d3-2',dom:'3.1',t:"What's new in Claude Code",s:1153,e:1275,D:'D3'},
+    {id:'s-d4-1',dom:'4.1',t:'Replit Agent evals',s:890,e:1117,D:'D4',DN:'Eval, Testing, and Debugging'},
+    {id:'s-d5-1',dom:'5.1',t:'The thinking lever',s:498,e:908,D:'D5',DN:'Model Selection and Optimization'},
+    {id:'s-d5-2',dom:'5.1',t:'The thinking lever',s:1084,e:1320,D:'D5'},
+    {id:'s-d5-4',dom:'5.3',t:'Caching at GitHub scale',s:1222,e:1476,D:'D5'},
+    {id:'s-d5-3',dom:'5.4',t:'Caching at GitHub scale',s:384,e:617,D:'D5'},
+    {id:'s-d6-1',dom:'6.1',t:'The expanding toolkit',s:407,e:598,D:'D6',DN:'Prompt and Context Engineering'},
+    {id:'s-d7-1',dom:'7.3',t:'The expanding toolkit',s:369,e:407,D:'D7',DN:'Security and Safety'},
+    {id:'s-d8-1',dom:'8.1',t:'The expanding toolkit',s:57,e:369,D:'D8',DN:'Tools and MCPs'},
+    {id:'s-d8-2',dom:'8.1',t:'The expanding toolkit',s:598,e:759,D:'D8'}
+  ];
+  var last=null, lastAt=0;
+  function fmt(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
+  var listEl=document.getElementById('list');
+  function buildList(){
+    var html='';var curD='';
+    SEGS.forEach(function(g,i){
+      if(g.D!==curD){curD=g.D; html+='<div class="dh"><span class="code">'+g.D+'</span><h2>'+(g.DN||'')+'</h2></div><ul class="list" data-d="'+g.D+'"></ul>';}
+    });
+    listEl.innerHTML=html;
+    SEGS.forEach(function(g,i){
+      var li=document.createElement('li'); li.className='seg'; li.id='row-'+i;
+      li.innerHTML='<span class="chk">✓</span><div class="body"><div class="t">'+g.t+'<span class="dom">'+g.dom+'</span></div><div class="ts">'+fmt(g.s)+' → '+fmt(g.e)+'</div></div><span class="d">'+Math.max(1,Math.round((g.e-g.s)/60))+' min</span>';
+      li.addEventListener('click',function(){send('jump:'+(i+1));});
+      listEl.querySelector('ul[data-d="'+g.D+'"]').appendChild(li);
+    });
+  }
+  buildList();
+  function render(){
+    if(!last) return;
+    var g=SEGS[last.i]||{};
+    var t=last.cur; if(last.state===1) t+=(Date.now()-last.ts)/1000;
+    var remain=Math.max(0,(last.e||g.e)-t);
+    document.getElementById('left').textContent=fmt(remain);
+    document.getElementById('lbl').textContent='Now · '+(last.i+1)+' of '+last.n+' · '+last.dom+(g.DN?' · '+g.DN:'');
+    document.getElementById('title').textContent=last.t+' '+fmt(last.s)+' → '+fmt(last.e);
+    document.getElementById('why').textContent=last.why||'';
+    var stn={'-1':'not started','0':'ended','1':'playing','2':'paused','3':'buffering','5':'cued'}[String(last.state)]||'';
+    document.getElementById('st').textContent=stn+' · updated '+Math.round((Date.now()-lastAt)/1000)+'s ago';
+    document.getElementById('pp').textContent=(last.state===1)?'Pause':'Play';
+    document.getElementById('pp').setAttribute('data-cmd',(last.state===1)?'pause':'play');
+    var total=(last.e-last.s)||1; document.getElementById('bar').style.width=Math.min(100,Math.max(0,100*(1-remain/total)))+'%';
+    var done={}; (last.done||[]).forEach(function(id){done[id]=true;});
+    SEGS.forEach(function(g,i){var li=document.getElementById('row-'+i); li.classList.toggle('cur',i===last.i); li.classList.toggle('done',!!done[g.id]);});
+  }
+  setInterval(render,500);
+  function send(cmd){ fetch('https://ntfy.sh/'+TOPIC+'-cmd',{method:'POST',body:cmd,headers:{'Priority':'min'}}).catch(function(){}); }
+  document.querySelectorAll('.ctl button').forEach(function(b){ b.addEventListener('click',function(){ send(b.getAttribute('data-cmd')); }); });
+  function connect(){
+    var es=new EventSource('https://ntfy.sh/'+TOPIC+'/sse?since=2h');
+    es.onopen=function(){document.getElementById('dot').classList.add('live');document.getElementById('status').textContent='live';};
+    es.onerror=function(){document.getElementById('dot').classList.remove('live');document.getElementById('status').textContent='reconnecting…';};
+    es.onmessage=function(ev){ try{var m=JSON.parse(ev.data); if(m.event!=='message') return; var p=JSON.parse(m.message); if(!last||p.ts>=last.ts){last=p; lastAt=Date.now(); render();}}catch(e){} };
+  }
+  connect();
+})();
+</script>
+</body>
+</html>
