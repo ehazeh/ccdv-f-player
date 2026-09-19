@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16181a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f8f9" media="(prefers-color-scheme: light)">
+<title>CCDV-F Perishables — Rote</title>
+<style>
+:root{
+  --paper:#f7f8f9; --ink:#1c1f22; --muted:#666e75; --rule:#dfe3e7;
+  --card:#fff; --accent:#3d6b8a; --accent-soft:#e6eef4;
+  --warn:#b4472b; --warn-bg:#fdf1ec; --ok:#3f7a56;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#16181a; --ink:#e6e9ec; --muted:#8f979e; --rule:#2c3136;
+    --card:#1f2225; --accent:#79aed1; --accent-soft:#22313c;
+    --warn:#e89275; --warn-bg:#33201a; --ok:#7fbd96;
+  }
+}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,sans-serif;padding-bottom:4rem}
+.wrap{max-width:820px;margin:0 auto;padding:0 1.15rem}
+header{padding:2.2rem 0 1.1rem;border-bottom:1px solid var(--rule)}
+.badge{display:inline-block;font:800 .64rem/1 -apple-system,sans-serif;letter-spacing:.11em;
+  text-transform:uppercase;background:var(--warn);color:#fff;padding:.32rem .55rem;border-radius:5px;margin-bottom:.7rem}
+h1{font:600 1.7rem/1.2 "New York","Iowan Old Style",Georgia,serif;margin:0 0 .45rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:.85rem;margin:0}
+.swap{display:block;margin-top:.9rem;font-size:.82rem;font-weight:600;color:var(--accent);text-decoration:none}
+nav{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule);
+  padding:.55rem 0;margin-bottom:1.4rem;backdrop-filter:saturate(1.6) blur(10px)}
+.pills{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;padding:0 1.15rem;max-width:820px;margin:0 auto}
+.pills::-webkit-scrollbar{display:none}
+.pills a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:.78rem;font-weight:600;
+  padding:.32rem .66rem;border:1px solid var(--rule);border-radius:100px;white-space:nowrap}
+.pills a.hot{color:#fff;background:var(--warn);border-color:var(--warn)}
+h2{font:600 1.22rem/1.25 "New York","Iowan Old Style",Georgia,serif;margin:2.4rem 0 .6rem;letter-spacing:-.01em}
+.why{background:var(--accent-soft);border-radius:12px;padding:1rem 1.1rem;margin:1.2rem 0;font-size:.9rem}
+.why b{color:var(--accent)}
+.note{background:var(--warn-bg);border-left:3px solid var(--warn);padding:.8rem 1rem;
+  border-radius:0 9px 9px 0;margin:1rem 0;font-size:.88rem}
+.note b{color:var(--warn)}
+.kv{background:var(--card);border:1px solid var(--rule);border-radius:12px;overflow:hidden;margin:.8rem 0}
+.kv div{display:flex;justify-content:space-between;gap:.9rem;align-items:baseline;
+  padding:.6rem .85rem;border-bottom:1px solid var(--rule);font-size:.89rem}
+.kv div:last-child{border-bottom:0}
+.kv span{font:600 .87rem/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:right;color:var(--accent);flex:0 0 auto;max-width:56%}
+.kv span.bad{color:var(--warn)}
+.kv span.good{color:var(--ok)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.8rem 0;
+  border:1px solid var(--rule);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.82rem}
+th,td{padding:.55rem .7rem;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;
+  position:sticky;top:0;background:var(--card)}
+tr:last-child td{border-bottom:0}
+td b{color:var(--ink)}
+.bad{color:var(--warn);font-weight:700}
+.hint{font-size:.78rem;color:var(--muted);margin:.4rem 0 0;font-style:italic}
+code{font:.86em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--accent-soft);padding:.1em .34em;border-radius:4px}
+footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--rule);color:var(--muted);font-size:.77rem}
+.src{font-size:.7rem;color:var(--muted);font-weight:700;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div class="badge">Rote memory · no metaphor</div>
+  <h1>CCDV-F Perishables</h1>
+  <p class="sub">Arbitrary values that move on a version bump. Memorize these — don't try to understand them.</p>
+  <a class="swap" href="./grid.html">← The metaphor grid (the shapes) </a>
+</header>
+</div>
+
+<nav><div class="pills">
+  <a href="#baseline" class="hot">⚠ Baseline trap</a>
+  <a href="#models">Models</a>
+  <a href="#cache">Caching</a>
+  <a href="#think">Thinking</a>
+  <a href="#hooks">Hooks</a>
+  <a href="#betas">Betas</a>
+  <a href="#limits">Limits</a>
+  <a href="#format">Format</a>
+</div></nav>
+
+<div class="wrap">
+
+<div class="why">
+  <b>The test for what lives here:</b> if a fact would change in a version bump <i>without changing the architecture</i>, it belongs on this page and not in the grid. These are values, not relations. A metaphor that absorbed them would be wrong within a quarter and would take your understanding down with it.
+  <br><br><span class="src">PROVENANCE —</span> <b>(N)</b> your own notes, verified by you 2026-09-18. <b>(S)</b> the bundled Anthropic API reference. Nothing was re-fetched live today.
+</div>
+
+<section id="baseline">
+  <h2>1 · The baseline trap</h2>
+  <p style="font-size:.9rem">The blueprint is v1.0 effective July 2026; the exam went live 2026-07-13. The item bank was written against a <b>July 2026</b> baseline, and things moved after. <b>If a stem only makes sense under the July baseline, answer per the baseline.</b> <span class="src">(N — your judgment call, not stated in the guide.)</span></p>
+  <div class="scroll"><table>
+    <tr><th>Thing</th><th>July baseline — answer this</th><th>Reality now</th><th>When</th></tr>
+    <tr><td><b>Skills API</b></td><td>beta <code>skills-2025-10-02</code></td><td>GA, no header</td><td>08-19</td></tr>
+    <tr><td><b>Files API</b></td><td>beta <code>files-api-2025-04-14</code></td><td>GA, no header</td><td>08-19</td></tr>
+    <tr><td><b>Computer use</b></td><td>beta</td><td>GA + browser use tool</td><td>08-19</td></tr>
+    <tr><td><b><code>tool_choice</code> any/tool</b></td><td>valid</td><td class="bad">400 on Fable 5.1</td><td>09-01</td></tr>
+    <tr><td><b>Opus 4.7 fast mode</b></td><td>existed</td><td class="bad">removed</td><td>07-24</td></tr>
+    <tr><td><b>Hook events</b></td><td>pre-DirectoryAdded</td><td>+DirectoryAdded, +Pre/PostModelSwitch</td><td>07-24, 08-28</td></tr>
+    <tr><td><b>AGENTS.md</b></td><td>not read</td><td>fallback when no CLAUDE.md</td><td>09-18</td></tr>
+  </table></div>
+  <div class="note"><b>Not shipped despite blog coverage.</b> “Function hooks” / “Claude Mods” (TypeScript-module hooks) is a GitHub proposal, not in the docs. An option offering a <code>function</code> or <code>module</code> handler type is a distractor today. <span class="src">(N)</span></div>
+</section>
+
+<section id="models">
+  <h2>2 · Models and pricing <span class="src">(S)</span></h2>
+  <p class="hint">Per MTok. Model IDs are complete as-is — never append a date suffix.</p>
+  <div class="scroll"><table>
+    <tr><th>Model</th><th>ID</th><th>Context</th><th>In $</th><th>Out $</th></tr>
+    <tr><td><b>Fable 5.1</b></td><td><code>claude-fable-5-1</code></td><td>1M</td><td>10</td><td>50</td></tr>
+    <tr><td><b>Fable 5</b></td><td><code>claude-fable-5</code></td><td>1M</td><td>10</td><td>50</td></tr>
+    <tr><td><b>Opus 5</b></td><td><code>claude-opus-5</code></td><td>1M</td><td>5</td><td>25</td></tr>
+    <tr><td><b>Opus 4.8</b></td><td><code>claude-opus-4-8</code></td><td>1M</td><td>5</td><td>25</td></tr>
+    <tr><td><b>Opus 4.7</b></td><td><code>claude-opus-4-7</code></td><td>1M</td><td>5</td><td>25</td></tr>
+    <tr><td><b>Opus 4.6</b></td><td><code>claude-opus-4-6</code></td><td>1M</td><td>5</td><td>25</td></tr>
+    <tr><td><b>Sonnet 5</b></td><td><code>claude-sonnet-5</code></td><td>1M</td><td>2</td><td>10</td></tr>
+    <tr><td><b>Sonnet 4.6</b></td><td><code>claude-sonnet-4-6</code></td><td>1M</td><td>3</td><td>15</td></tr>
+    <tr><td><b>Haiku 4.5</b></td><td><code>claude-haiku-4-5</code></td><td class="bad">200K</td><td>1</td><td>5</td></tr>
+  </table></div>
+  <div class="kv">
+    <div>Opus 5 launched <span>2026-07-24, $5/$25</span></div>
+    <div>Sonnet 5 $2/$10 permanent <span>2026-08-10</span></div>
+    <div>Only 200K-context model <span class="bad">Haiku 4.5</span></div>
+    <div>Max output (current models) <span>128K — streaming required</span></div>
+    <div>Models API context field <span class="bad">max_input_tokens</span></div>
+  </div>
+  <p class="hint">There is no <code>context_window</code> field. It's <code>max_input_tokens</code> (window) and <code>max_tokens</code> (output cap).</p>
+</section>
+
+<section id="cache">
+  <h2>3 · Prompt caching numbers <span class="src">(N + S agree)</span></h2>
+  <div class="kv">
+    <div>Invalidation order <span>tools → system → messages</span></div>
+    <div>5-minute write <span>1.25x</span></div>
+    <div>1-hour write <span>2x</span></div>
+    <div>Read <span>0.1x</span></div>
+    <div>Read, Fable 5.1 <span class="good">$0.25/MTok (0.025x)</span></div>
+    <div>Max breakpoints <span>4</span></div>
+    <div>Lookback <span>20 blocks</span></div>
+    <div>Min cacheable prefix <span>512–4096 tok, model-dep.</span></div>
+    <div>Verify with <span>cache_read_input_tokens</span></div>
+  </div>
+  <p class="hint">Shorter than the minimum prefix silently does not cache. Caches are model-scoped — a multi-model cascade forfeits reuse.</p>
+</section>
+
+<section id="think">
+  <h2>4 · Thinking, effort, sampling <span class="src">(S)</span></h2>
+  <p class="hint">Effort: low / medium / high / xhigh / max. Default <b>high</b>. Lives inside <code>output_config</code>, not top-level. <code>xhigh</code> arrived with Opus 4.7.</p>
+  <div class="scroll"><table>
+    <tr><th>Model</th><th>Omitting <code>thinking</code></th><th><code>disabled</code></th><th><code>budget_tokens</code></th><th>temp/top_p</th></tr>
+    <tr><td><b>Fable 5 / 5.1</b></td><td>adaptive (always on)</td><td class="bad">400</td><td class="bad">400</td><td class="bad">400</td></tr>
+    <tr><td><b>Opus 5</b></td><td><b>adaptive</b></td><td>OK only at effort ≤ high</td><td class="bad">400</td><td class="bad">400</td></tr>
+    <tr><td><b>Opus 4.8 / 4.7</b></td><td class="bad">NO thinking</td><td>accepted</td><td class="bad">400</td><td class="bad">400</td></tr>
+    <tr><td><b>Sonnet 5</b></td><td>adaptive</td><td>accepted</td><td class="bad">400</td><td class="bad">400</td></tr>
+    <tr><td><b>Opus/Sonnet 4.6</b></td><td>no thinking unless set</td><td>accepted</td><td>deprecated, works</td><td>allowed</td></tr>
+    <tr><td><b>Haiku 4.5</b></td><td>no thinking</td><td>—</td><td><b>required</b>, ≥1024</td><td>allowed</td></tr>
+  </table></div>
+  <div class="note"><b>The trap.</b> Opus 5 defaults thinking <b>ON</b>. Opus 4.8 / 4.7 default <b>OFF</b>. Adjacent versions, opposite defaults.</div>
+  <div class="kv">
+    <div>Thinking display default (5-family) <span>"omitted"</span></div>
+    <div>Was, on 4.6 <span>"summarized"</span></div>
+    <div>Raw chain of thought <span class="bad">never exposed, any model</span></div>
+    <div>Assistant prefill <span class="bad">400 on all current models</span></div>
+  </div>
+</section>
+
+<section id="hooks">
+  <h2>5 · Hooks roster <span class="src">(N)</span></h2>
+  <div class="kv">
+    <div>Event count <span>33</span></div>
+    <div>Handler types <span>command · http · mcp_tool · prompt · agent</span></div>
+    <div>Exit 2 <span>blocking error</span></div>
+    <div>Exit 0 + JSON <span>structured decision</span></div>
+    <div>Added 2026-07-24 <span>DirectoryAdded</span></div>
+    <div>Added 2026-08-28 <span>Pre/PostModelSwitch</span></div>
+    <div>Fake <span class="bad">function · module · cron</span></div>
+  </div>
+  <div class="note"><b>Inference hooks are a different product.</b> Beta, Enterprise, 2026-08-05. Server-side allow/deny via your own HTTPS server. The <b>only event is “prompt”</b>, the verdict is <b>binary</b>, and it <b>cannot rewrite</b>. Confusable pair with 7.1.</div>
+</section>
+
+<section id="betas">
+  <h2>6 · Beta headers and type strings <span class="src">(S)</span></h2>
+  <div class="kv">
+    <div>Compaction (threshold) <span>compact-2026-01-12 · 150K</span></div>
+    <div>Compaction strategy <span>compact_20260112</span></div>
+    <div>Compaction (on-demand) <span>compact-2026-09-04</span></div>
+    <div>Context editing <span>context-management-2025-06-27</span></div>
+    <div>Ctx-edit strategies <span>clear_tool_uses_20250919 · clear_thinking_20251015</span></div>
+    <div>Task budgets <span>task-budgets-2026-03-13 · min 20,000</span></div>
+    <div>Managed Agents <span>managed-agents-2026-04-01</span></div>
+    <div>Fast mode <span>fast-mode-2026-02-01 + speed:"fast"</span></div>
+    <div>MCP connector <span>mcp-client-2025-11-20</span></div>
+    <div>Cache diagnostics <span>cache-diagnosis-2026-04-07</span></div>
+    <div>Memory tool <span>memory_20250818</span></div>
+    <div>Bash tool <span>bash_20250124 · no schema</span></div>
+    <div>Text editor <span>text_editor_20250728 · no schema</span></div>
+    <div>Web search <span>web_search_20260209 (old: _20250305)</span></div>
+    <div>Web fetch <span>web_fetch_20260209 (old: _20250910)</span></div>
+    <div>Code execution <span>code_execution_20260521</span></div>
+    <div>…returns <span class="bad">bash_code_execution_tool_result</span></div>
+    <div>Code exec REPL <span>code_execution_20260120</span></div>
+    <div>Tool search <span>tool_search_tool_regex/bm25_20251119</span></div>
+  </div>
+  <div class="note"><b>Do not mix up.</b> <code>compact_20260112</code> is <i>compaction</i>. Context editing never uses it. Compaction summarizes server-side; context editing clears, client-directed.</div>
+</section>
+
+<section id="limits">
+  <h2>7 · Limits and defaults <span class="src">(S)</span></h2>
+  <div class="kv">
+    <div>Client timeout default <span>10 minutes</span></div>
+    <div>Timeout units <span class="bad">PY/RB sec · TS ms</span></div>
+    <div><code>max_retries</code> default <span>2</span></div>
+    <div>Retries on <span>408 · 409 · 429 · 5xx · conn</span></div>
+    <div>Batch cost <span class="good">~50%</span></div>
+    <div>Batch result order <span class="bad">ANY — key by custom_id</span></div>
+    <div>PDF limits <span>32 MB · 600 pages (100 @200K)</span></div>
+    <div>Domain lists <span>allowed OR blocked, never both</span></div>
+    <div>Tool search <span>≥1 non-deferred tool or 400</span></div>
+  </div>
+  <div class="kv">
+    <div>Structured outputs <span>output_config.format</span></div>
+    <div>Deprecated <span class="bad">output_format</span></div>
+    <div><code>strict: true</code> goes on <span class="bad">the tool definition</span></div>
+    <div>…not on <span class="bad">tool_choice</span></div>
+    <div>Strict schema needs <span>additionalProperties:false + required</span></div>
+    <div><code>stop_details</code> populated <span class="bad">ONLY on refusal</span></div>
+    <div><code>inference_geo</code> <span>top-level (Messages API)</span></div>
+    <div>…on Managed Agents <span>inside model object</span></div>
+  </div>
+  <div class="note"><b>Fast mode:</b> Opus 5 / Opus 4.8 only, Claude API + Managed Agents only. Not on Batch, Priority Tier, Bedrock, Vertex, Foundry. Up to 2.5x output tok/s. Opus 4.7 fast mode <b>removed</b>.<br><br><b>Priority Tier is NOT supported</b> on Opus 5, Sonnet 5, Fable 5.1, Mythos 5.1/5. It <i>is</i> on Fable 5, Opus 4.8, and older.<br><br><b>MCP connector needs both halves:</b> <code>mcp_servers</code> alone is a validation error — also pass <code>tools=[{type:"mcp_toolset", mcp_server_name:…}]</code>.</div>
+</section>
+
+<section id="format">
+  <h2>8 · Exam format <span class="src">(N, official guide)</span></h2>
+  <div class="kv">
+    <div>Items <span>53</span></div>
+    <div>Time <span>120 min (~2:15 each)</span></div>
+    <div>Scale <span>100–1000 · 720 to pass</span></div>
+    <div>Mix <span>~70% single · ~30% select-TWO</span></div>
+    <div>Single-answer options <span>4</span></div>
+    <div>Multiple-response options <span>5</span></div>
+    <div>Working pass proxy <span>~72% overall</span></div>
+  </div>
+  <div class="kv">
+    <div>D1 Agents &amp; Workflows <span>14.7%</span></div>
+    <div>D2 Applications &amp; Integration <span class="bad">33.1%</span></div>
+    <div>D3 Claude Code <span>3.1%</span></div>
+    <div>D4 Eval / Debugging <span>2.6%</span></div>
+    <div>D5 Model Selection <span>16.8%</span></div>
+    <div>D6 Prompt &amp; Context <span>11.0%</span></div>
+    <div>D7 Security &amp; Safety <span>8.1%</span></div>
+    <div>D8 Tools &amp; MCPs <span>10.6%</span></div>
+  </div>
+  <div class="note"><b>D2 is a third of the exam</b> and has the thinnest video coverage. It's docs-drilled: Messages API, streaming, batches, vision, files, errors.</div>
+</section>
+
+<section id="dated">
+  <h2>9 · Dated changes in the window <span class="src">(N)</span></h2>
+  <div class="kv">
+    <div>08-05 · Inference hooks <span>beta, Enterprise</span></div>
+    <div>08-07 · Managed Agents <span>budget caps, advisor, inference_geo</span></div>
+    <div>08-19 · GA wave <span>Files, Skills, computer use</span></div>
+    <div>08-20 · Python SDK v1.0 <span>httpx2, Py 3.10+</span></div>
+    <div>09-01 · Fable 5.1 <span>cache $0.25, tool_choice 400</span></div>
+    <div>09-14 · On-demand compaction <span>compact-2026-09-04</span></div>
+    <div>09-18 · CC 2.1.277 <span>AGENTS.md fallback</span></div>
+    <div>09-19 · CC 2.1.278 <span>auto-mode classifier server-side</span></div>
+  </div>
+</section>
+
+<footer>
+  Mirrors <code>~/Desktop/CCDV-F/perishables.md</code> · snapshot 2026-09-19.<br>
+  Companion to <a href="./grid.html" style="color:var(--accent)">the metaphor grid</a>, which carries the shapes. This page carries the numbers.<br>
+  Not re-fetched live today — verify anything that decides an answer against the official docs.
+</footer>
+
+</div>
+</body>
+</html>
