@@ -130,7 +130,7 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
   function send(cmd){ fetch('https://ntfy.sh/'+TOPIC+'-cmd',{method:'POST',body:cmd,headers:{'Priority':'min'}}).catch(function(){}); }
   document.querySelectorAll('.ctl button').forEach(function(b){ b.addEventListener('click',function(){ send(b.getAttribute('data-cmd')); }); });
   function connect(){
-    var es=new EventSource('https://ntfy.sh/'+TOPIC+'/sse?since=2h');
+    var es=new EventSource('https://ntfy.sh/'+TOPIC+'/sse?since=48h');
     es.onopen=function(){document.getElementById('dot').classList.add('live');document.getElementById('status').textContent='live';};
     es.onerror=function(){document.getElementById('dot').classList.remove('live');document.getElementById('status').textContent='reconnecting…';};
     es.onmessage=function(ev){ try{var m=JSON.parse(ev.data); if(m.event!=='message') return; var p=JSON.parse(m.message); if(!last||p.ts>=last.ts){last=p; lastAt=Date.now(); render();}}catch(e){} };
