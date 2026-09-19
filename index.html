@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCDV-F Player</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#F5F6F8;--surface:#FFFFFF;--surface-2:#EDEFF3;--line:#D8DCE3;--ink:#1A2230;--ink-2:#4A5568;--ink-3:#7B8794;--accent:#0F6E6A;--accent-ink:#0B5552;--accent-soft:#D9EEEC;--done:#8A94A3;--off-fg:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F141B;--surface:#161C25;--surface-2:#1E2631;--line:#2C3644;--ink:#E6EAF0;--ink-2:#B3BCC8;--ink-3:#7F8A99;--accent:#4FB8B2;--accent-ink:#8ED9D4;--accent-soft:#143634;--done:#5A6473;--off-fg:#0B1016}}
+:root[data-theme="dark"]{--bg:#0F141B;--surface:#161C25;--surface-2:#1E2631;--line:#2C3644;--ink:#E6EAF0;--ink-2:#B3BCC8;--ink-3:#7F8A99;--accent:#4FB8B2;--accent-ink:#8ED9D4;--accent-soft:#143634;--done:#5A6473;--off-fg:#0B1016}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.4;padding-inline:16px;padding-block:0 80px;margin:0}
+.wrap{max-width:640px;margin:0 auto}
+h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;margin:0;line-height:1.1}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:12px 10px;display:flex;flex-direction:column;gap:8px}
+.head{display:flex;align-items:center;gap:12px}
+.head .stat{margin-left:auto;text-align:right;line-height:1.15}
+.head .stat b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:20px;font-variant-numeric:tabular-nums}
+.head .stat span{font-size:11.5px;color:var(--ink-3)}
+.frame{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.now{padding:10px 12px;background:var(--accent-soft);border-radius:12px;color:var(--accent-ink)}
+.now .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+.now .t{font-weight:600;font-size:15px}
+.now .why{font-size:13.5px;margin-top:2px;opacity:.9}
+.ctl{display:flex;gap:8px}
+.ctl button{flex:1;font:inherit;font-weight:600;font-size:15px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.ctl button.primary{background:var(--accent);color:var(--off-fg);border-color:transparent}
+.ctl button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.list{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.seg.cur{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.seg .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);width:22px;flex:0 0 auto}
+.seg .body{flex:1 1 auto;min-width:0}
+.seg .t{font-weight:600;font-size:15px;line-height:1.3}
+.seg .ts{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent-ink)}
+.seg .d{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);flex:0 0 auto}
+.seg.done .t,.seg.done .ts{color:var(--done);text-decoration:line-through}
+.seg .dom{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);margin-left:6px}
+.note{margin-top:14px;font-size:12.5px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<div class="top">
+  <div class="head"><div><h1>CCDV-F Player</h1><div class="mono" style="color:var(--ink-3)">18 segments · plays through</div></div><div class="stat"><b id="left">—</b><span>min left</span></div></div>
+  <div class="frame"><iframe id="yt" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="Video"></iframe></div>
+  <div class="now"><div class="lbl" id="now-lbl">Now</div><div class="t" id="now-t">—</div><div class="why" id="now-why"></div></div>
+  <div class="ctl"><button id="prev" type="button">Prev</button><button id="play" class="primary" type="button">Play</button><button id="skip" type="button">Next</button></div>
+</div>
+<ul class="list" id="list"></ul>
+<div class="note">Each segment stops at its end time and the next one loads. If your phone blocks autoplay, tap Play once per segment. Progress is saved in this browser.</div>
+</div>
+
+<script>
+(function(){
+  var SEGS=[
+    {id:'s-d5-1',dom:'D5',v:'OXJO4LldSnc',s:498,e:908,t:'The thinking lever',why:'Effort dial vs thinking toggle. Task budgets. Interleaved → adaptive thinking.'},
+    {id:'s-d5-2',dom:'D5',v:'OXJO4LldSnc',s:1084,e:1320,t:'The thinking lever',why:'Rules per effort level. Big model on low beats small model on max.'},
+    {id:'s-d5-3',dom:'D5',v:'y5TmF_6o6xk',s:384,e:617,t:'Caching at GitHub scale',why:'94% hit rate: static prompt, nothing dynamic in the prefix.'},
+    {id:'s-d5-4',dom:'D5',v:'y5TmF_6o6xk',s:1222,e:1476,t:'Caching at GitHub scale',why:'Taking a new model: harness → offline benchmarks → dogfood.'},
+    {id:'s-d1-1',dom:'D1',v:'y5TmF_6o6xk',s:842,e:1078,t:'Advisors at GitHub scale',why:'Advisor pattern and rubber-duck critique.'},
+    {id:'s-d1-2',dom:'D1',v:'E9gaQHrw_rg',s:257,e:440,t:'Managed Agents',why:'Agent, environment, session. Event types.'},
+    {id:'s-d1-3',dom:'D1',v:'E9gaQHrw_rg',s:628,e:703,t:'Managed Agents',why:'Orchestration, outcomes, memory, dreaming.'},
+    {id:'s-d1-4',dom:'D1',v:'RtywqDFBYnQ',s:277,e:435,t:'Memory and dreaming',why:'CLAUDE.md → memory tool → file system.'},
+    {id:'s-d2-1',dom:'D2',v:'7oO37GRhwGk',s:122,e:290,t:'More out of the Claude Platform',why:'Caching: 90% off, lower latency, skips rate limits.'},
+    {id:'s-d2-2',dom:'D2',v:'7oO37GRhwGk',s:597,e:874,t:'More out of the Claude Platform',why:'Context engineering. Tool search tool. Programmatic tool calling.'},
+    {id:'s-d2-3',dom:'D2',v:'7oO37GRhwGk',s:874,e:1050,t:'More out of the Claude Platform',why:'Compaction = server-side summary.'},
+    {id:'s-d8-1',dom:'D8',v:'KLCuxMDZSDg',s:57,e:369,t:'The expanding toolkit',why:'Routing and retries are the model\'s job. Output schema in the tool description.'},
+    {id:'s-d8-2',dom:'D8',v:'KLCuxMDZSDg',s:598,e:759,t:'The expanding toolkit',why:'Code execution = server-side sandbox.'},
+    {id:'s-d6-1',dom:'D6',v:'KLCuxMDZSDg',s:407,e:598,t:'The expanding toolkit',why:'1M window, compaction, context editing. Clear stale tool results.'},
+    {id:'s-d7-1',dom:'D7',v:'KLCuxMDZSDg',s:369,e:407,t:'The expanding toolkit',why:'PreToolUse / PostToolUse hooks.'},
+    {id:'s-d3-1',dom:'D3',v:'IMZa42k6L6M',s:676,e:735,t:"What's new in Claude Code",why:'Auto mode.'},
+    {id:'s-d3-2',dom:'D3',v:'IMZa42k6L6M',s:1153,e:1275,t:"What's new in Claude Code",why:'Routines: cron, webhook, API.'},
+    {id:'s-d4-1',dom:'D4',v:'snroDwX1-JU',s:890,e:1117,t:'Replit Agent evals',why:'Cluster traces → patch → evaluate → A/B → ship.'}
+  ];
+  var KEY='ccdv-player';
+  var st={done:{},cur:0};
+  try{var raw=JSON.parse(localStorage.getItem(KEY)||'null'); if(raw&&typeof raw==='object'){st.done=raw.done||{}; st.cur=raw.cur||0;}}catch(e){}
+  var iframe=document.getElementById('yt'), list=document.getElementById('list');
+  var origin=location.origin;
+  function fmt(s){var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+  function post(msg){try{iframe.contentWindow.postMessage(JSON.stringify(msg),'*');}catch(e){}}
+  function render(){
+    list.innerHTML='';
+    var left=0;
+    SEGS.forEach(function(g,i){
+      var mins=Math.round((g.e-g.s)/60); if(!st.done[g.id]) left+=Math.max(1,mins);
+      var li=document.createElement('li'); li.className='seg'+(i===st.cur?' cur':'')+(st.done[g.id]?' done':'');
+      li.innerHTML='<span class="n">'+(i+1)+'</span><div class="body"><div class="t">'+g.t+'<span class="dom">'+g.dom+'</span></div><div class="ts">'+fmt(g.s)+' → '+fmt(g.e)+'</div></div><span class="d">'+Math.max(1,mins)+' min</span>';
+      li.addEventListener('click',function(){load(i,true);});
+      list.appendChild(li);
+    });
+    document.getElementById('left').textContent=left;
+    var g=SEGS[st.cur];
+    document.getElementById('now-lbl').textContent='Now · '+(st.cur+1)+' of '+SEGS.length+' · '+g.dom;
+    document.getElementById('now-t').textContent=g.t+' '+fmt(g.s)+' → '+fmt(g.e);
+    document.getElementById('now-why').textContent=g.why;
+  }
+  var loadedOnce=false;
+  function load(i,autoplay){
+    if(i<0||i>=SEGS.length) return;
+    st.cur=i; save(); render();
+    var g=SEGS[i];
+    if(!loadedOnce){
+      iframe.src='https://www.youtube.com/embed/'+g.v+'?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&start='+g.s+'&end='+g.e+(autoplay?'&autoplay=1':'')+'&origin='+encodeURIComponent(origin);
+      loadedOnce=true;
+    } else {
+      post({event:'command',func:'loadVideoById',args:[{videoId:g.v,startSeconds:g.s,endSeconds:g.e}]});
+      if(!autoplay) post({event:'command',func:'pauseVideo',args:[]});
+    }
+  }
+  window.addEventListener('message',function(ev){
+    if(typeof ev.data!=='string') return;
+    var d; try{d=JSON.parse(ev.data);}catch(e){return;}
+    if(d.event==='onReady'||d.event==='infoDelivery'&&!listening){ }
+    if(d.event==='onStateChange'&&d.info===0){
+      st.done[SEGS[st.cur].id]=true; save();
+      if(st.cur+1<SEGS.length) load(st.cur+1,true); else render();
+    }
+  });
+  var listening=false;
+  iframe.addEventListener('load',function(){
+    post({event:'listening',id:1,channel:'widget'});
+    listening=true;
+  });
+  document.getElementById('prev').addEventListener('click',function(){load(Math.max(0,st.cur-1),true);});
+  document.getElementById('skip').addEventListener('click',function(){st.done[SEGS[st.cur].id]=true; save(); load(Math.min(SEGS.length-1,st.cur+1),true);});
+  document.getElementById('play').addEventListener('click',function(){ if(!loadedOnce) load(st.cur,true); else post({event:'command',func:'playVideo',args:[]}); });
+  // start on the first unfinished segment, paused
+  var first=SEGS.findIndex(function(g){return !st.done[g.id];}); if(first<0) first=0;
+  st.cur=first; render(); load(first,false);
+})();
+</script>
+</body>
+</html>
