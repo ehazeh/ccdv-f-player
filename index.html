@@ -85,7 +85,7 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
   ];
   var KEY='ccdv-player';
   var st={done:{},cur:0};
-  try{var raw=JSON.parse(localStorage.getItem(KEY)||'null'); if(raw&&typeof raw==='object'){st.done=raw.done||{}; st.cur=raw.cur||0;}}catch(e){}
+  try{var raw=JSON.parse(localStorage.getItem(KEY)||'null'); if(raw&&typeof raw==='object'){st.done=raw.done||{}; st.cur=raw.cur||0; st.pos=raw.pos||0; st.posIdx=(typeof raw.posIdx==='number')?raw.posIdx:st.cur;}}catch(e){}
   var iframe=document.getElementById('yt'), list=document.getElementById('list');
   var origin=location.origin;
   function fmt(s){var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
