@@ -142,7 +142,7 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
   var TOPIC='ccdv-b0324c76cff0';
   var live={t:0,state:-1,ts:Date.now(),lastPub:0,lastPubKey:''};
   function fmtLeft(sec){sec=Math.max(0,Math.round(sec));var m=Math.floor(sec/60),x=sec%60;return m+':'+(x<10?'0':'')+x;}
-  function curRemaining(){var g=SEGS[st.cur];var t=live.t; if(live.state===1) t+= (Date.now()-live.ts)/1000; return g.e - t;}
+  function curRemaining(){var g=SEGS[st.cur];var t=live.t; if(live.state===1) t+= (Date.now()-live.ts)/1000; if(t<g.s) t=g.s; return g.e - t;}
   function drawOverlay(){var g=SEGS[st.cur]; document.getElementById('ovl-left').textContent=fmtLeft(curRemaining())+' left'; document.getElementById('ovl-txt').textContent=(st.cur+1)+' / '+SEGS.length+' · '+g.dom+' · '+g.t;}
   setInterval(drawOverlay,250);
   function publish(force){

@@ -101,7 +101,7 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
   function render(){
     if(!last) return;
     var g=SEGS[last.i]||{};
-    var t=last.cur; if(last.state===1) t+=(Date.now()-last.ts)/1000;
+    var t=last.cur; if(last.state===1) t+=(Date.now()-last.ts)/1000; if(t<last.s) t=last.s;
     var remain=Math.max(0,(last.e||g.e)-t);
     document.getElementById('left').textContent=fmt(remain);
     document.getElementById('lbl').textContent='Now · '+(last.i+1)+' of '+last.n+' · '+last.dom+(g.DN?' · '+g.DN:'');
