@@ -115,7 +115,7 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
     var startAt=g.s; if(typeof st.pos==='number' && st.posIdx===i && st.pos>g.s && st.pos<g.e-3) startAt=Math.floor(st.pos);
     if(st.posIdx!==i){ st.pos=0; st.posIdx=i; save(); }
     if(!loadedOnce){
-      iframe.src='https://www.youtube.com/embed/'+g.v+'?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&start='+g.s+'&end='+g.e+(autoplay?'&autoplay=1':'')+'&origin='+encodeURIComponent(origin);
+      iframe.src='https://www.youtube.com/embed/'+g.v+'?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&start='+startAt+'&end='+g.e+(autoplay?'&autoplay=1':'')+'&origin='+encodeURIComponent(origin);
       loadedOnce=true;
     } else {
       post({event:'command',func:'loadVideoById',args:[{videoId:g.v,startSeconds:startAt,endSeconds:g.e}]});
