@@ -63,8 +63,8 @@ footer a{color:var(--s1)}
 </header>
 
 <div class="scene">
-  <b>The kitchen.</b> An owner who wrote the prep lists months ago and isn't here tonight. An expediter at the pass calling tickets. Line cooks at their stations. And a new hire on day one who doesn't know why the walk-in is arranged the way it is, or why nobody touches the second fryer.
-  <br><br>Everything below is one of those four people, or something they're fighting over.
+  <b>Two settings, on purpose.</b> A kitchen mid-service carries <i>operations under constraint</i> — who decides what and when, how work flows, what runs out. An owner who wrote the prep lists months ago and isn't here tonight. An expediter at the pass calling audibles. Cooks watching the counter fill.
+  <br><br>But a kitchen has no vocabulary for <b>a system that rewrites its own rules</b> — the owner revises the prep list; the dish never proposes a recipe. So law and self-modification move to science fiction, which is native to exactly that. Domain is assigned per <i>kind</i>, not per concept.
 </div>
 
 <!-- ============ 1. FOUR SEATS ============ -->
@@ -106,7 +106,7 @@ footer a{color:var(--s1)}
   <rect x="40" y="196" width="168" height="44" rx="9" fill="var(--s4)" opacity=".18"/>
   <circle cx="60" cy="218" r="7" fill="var(--s4)"/>
   <text x="76" y="215" class="t1 lbl">Investigator</text>
-  <text x="76" y="230" class="t2 sub">day one — why is it like this?</text>
+  <text x="76" y="230" class="t2 sub">excavating a system nobody wrote</text>
   <text x="40" y="256" class="t3 sub">INSIDE, WITHOUT THE RULES — learning</text>
 
   <!-- arc arrow: investigator up to architect -->
@@ -136,7 +136,7 @@ footer a{color:var(--s1)}
   <circle cx="560" cy="218" r="7" fill="var(--tx3)"/>
   <text x="576" y="222" class="t2 sub">after service</text>
 </svg>
-<figcaption><b>Why four.</b> The first three all assume you already know the rules — the Architect wrote them, the Operator works them knowingly, the Construct-self at least knows they exist. The investigator doesn't. It's the only seat where learning happens, and it's where the loop starts: you can't write a prep list for a kitchen you've never worked. <b>Keep it out of the exam test</b> — it settles no question, it just explains why you're studying.</figcaption>
+<figcaption><b>Why four.</b> The first three all assume you already know the rules — the Architect wrote them, the Operator works them knowingly, the Construct-self at least knows they exist. The investigator doesn't. Science fiction already named the job: Vinge's <b>programmer-archaeologist</b>, an engineer on a ship running software so old and so layered that nobody alive wrote it or fully understands it — the work is excavation, not authorship. It's the only seat where learning happens, and it's where the loop starts. <b>Keep it out of the exam test</b> — it settles no question, it explains why you're studying.</figcaption>
 </figure>
 
 <!-- ============ 2. FIVE KINDS ============ -->
@@ -498,7 +498,7 @@ footer a{color:var(--s1)}
   <text x="485" y="198" class="t1 sub" text-anchor="middle" style="font-weight:700">Entry by force.</text>
   <text x="485" y="218" class="t3 sub" text-anchor="middle">SQL · code · dependency · prompt</text>
 </svg>
-<figcaption><b>The failure boundary, stated plainly:</b> a coat hook explains attachment and fixed position. It does <i>not</i> explain interception — a coat hook stops nobody walking past, and Claude Code hooks can block. For behavior, switch pictures: a checkpoint with a standing order. You own the guard and the written order; the guard doesn't think and can't be argued with.</figcaption>
+<figcaption><b>The failure boundary:</b> a coat hook explains attachment and fixed position. It does <i>not</i> explain interception — a coat hook stops nobody walking past, and hooks can block. For behavior the better picture is <b>Asimov's Three Laws</b>: written by an author who isn't in the room, checked before every single action, not arguable, and <i>strictly ordered</i> so conflicts resolve by precedence rather than judgment — the same shape as <code>settings.json</code> scopes and the CLAUDE.md hierarchy. And the genre's whole preoccupation is the case the author never foresaw, which is exactly why a judging model sits alongside deterministic law.</figcaption>
 </figure>
 
 <!-- ============ 9. FUTURE ============ -->
@@ -528,7 +528,19 @@ footer a{color:var(--s1)}
   <path d="M 450 166 C 450 130, 150 130, 150 166" class="edge" stroke="var(--s2)" marker-end="url(#ar2)"/>
   <text x="300" y="134" class="t2 sub" text-anchor="middle" style="font-weight:700">and the thing inside the run is what rewrites it</text>
 </svg>
-<figcaption>The shift isn't that agents write code. It's that <b>the system now participates in authoring its own constraints</b> — the agent proposes the hook, writes the memory, edits the file that governs its next run. In the old loop a human carried every insight from runtime back to design time, slowly. That carrier is being automated. Everything on the rote sheet will be wrong within a year; this shape won't be.</figcaption>
+<svg viewBox="0 0 640 132" role="img" aria-label="Layers of rules accreting, the newest written from inside the system" style="margin-top:.6rem">
+  <text x="30" y="18" class="t2 sub" style="font-weight:700">NEXT — the layers accrete, and nobody wrote most of them</text>
+  <rect x="30" y="30" width="560" height="16" rx="3" fill="var(--s4)" opacity=".28"/>
+  <text x="40" y="42" class="t3 sub">rules you wrote, years ago</text>
+  <rect x="30" y="50" width="560" height="16" rx="3" fill="var(--s4)" opacity=".46"/>
+  <text x="40" y="62" class="t3 sub">rules a colleague wrote, reasons undocumented</text>
+  <rect x="30" y="70" width="560" height="16" rx="3" fill="var(--s4)" opacity=".66"/>
+  <text x="40" y="82" class="t3 sub">rules the system proposed and you approved</text>
+  <rect x="30" y="90" width="560" height="16" rx="3" fill="var(--s4)"/>
+  <text x="40" y="102" class="sub" fill="#fff" style="font-weight:700">rules the system wrote for itself</text>
+  <text x="30" y="126" class="t3 sub">↑ this is the stratum the programmer-archaeologist digs through</text>
+</svg>
+<figcaption>The shift isn't that agents write code. It's that <b>the system now participates in authoring its own constraints</b> — the agent proposes the hook, writes the memory, edits the file that governs its next run. In the old loop a human carried every insight from runtime back to design time, slowly; that carrier is being automated. Which closes the circle on Figure 1: the more the system writes its own rules, the more <b>the investigator seat becomes the permanent condition</b> rather than a beginner's phase. Vinge's programmer-archaeologist isn't a curiosity — it's the job description arriving early. Everything on the rote sheet will be wrong within a year; this shape won't be.</figcaption>
 </figure>
 
 <footer>

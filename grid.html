@@ -160,7 +160,7 @@ code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--a
   <h3>The fourth seat — the investigator</h3>
   <div class="seatcard" style="border-color:var(--accent)">
     <b>Investigator · inside, without the rules</b>
-    <em>All three seats above presuppose you already know the rules. This one doesn't: <b>inside the system, didn't build it, doesn't yet know how it works, reverse-engineering it from the inside.</b> It is the only seat where <i>learning</i> happens — the other three are competence stances.</em>
+    <em>All three seats above presuppose you already know the rules. This one doesn't: <b>inside the system, didn't build it, doesn't yet know how it works, reverse-engineering it from the inside.</b> It is the only seat where <i>learning</i> happens — the other three are competence stances.<br><br>Science fiction already named the job: Vinge's <b>programmer-archaeologist</b> (<i>A Deepness in the Sky</i>) — an engineer on a ship running software so old and so layered that nobody alive wrote it or fully understands it, whose work is excavation rather than authorship.</em>
   </div>
   <div class="note"><b>Keep this one out of the exam tool.</b> The seat test works because Architect / Operator / Construct-self are <i>operational</i> stances that settle where a mechanism fires. The investigator seat settles nothing — it's the reason you're studying, not a discriminator. Structurally it's where the loop <i>starts</i>: you cannot write law for a system you've never been inside.</div>
 </section>
@@ -392,7 +392,16 @@ code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--a
     An <b>injection</b> creates its own entry — the injector supplies both the substance <i>and</i> the opening; the target never offered one. Hence SQL injection, code injection, dependency injection. Entry <b>by force</b>.</p>
     <p class="disc">Because the host mounts the hooks, the set of events and handler types must be <b>finite, published and enumerable</b>. So an option naming a hook event or handler type that doesn't exist is a distractor <i>by construction</i> — a “cron hook event” is fake; “function”/“module” handler types are a proposal, not shipped.</p>
   </div>
-  <div class="note"><b>Failure boundary.</b> A coat hook explains attachment and fixed position. It does <i>not</i> explain <b>interception</b> — a coat hook doesn't stop anyone walking past, and hooks can block. For behavior switch images: <b>a checkpoint you cannot walk past</b>.</div>
+  <div class="note"><b>Failure boundary.</b> A coat hook explains attachment and fixed position. It does <i>not</i> explain <b>interception</b> — a coat hook doesn't stop anyone walking past, and hooks can block. For behavior, switch images.</div>
+  <div class="card weak">
+    <p class="term">Hook behavior = <b>Asimov's Three Laws</b> <span class="chip k3">K3</span></p>
+    <p class="meta">Written by an author who isn't in the room. <b>Checked before every single action.</b> Not arguable — no robot reasons its way past the First Law. And <b>strictly ordered</b>: Law 1 beats 2 beats 3, so conflicts resolve by <i>precedence</i>, not judgment.</p>
+    <p class="meta" style="margin-top:.6rem">Three things this carries that a coat hook couldn't:<br>
+    <b>1.</b> Checked before every action — that's <code>PreToolUse</code>, exactly.<br>
+    <b>2.</b> Precedence is part of the design — the same shape governs <code>settings.json</code> scopes and the CLAUDE.md hierarchy. Reversed-precedence options are a standard distractor.<br>
+    <b>3.</b> <b>The anticipation failure is the point of the genre.</b> Every Asimov robot story is deterministic law meeting a case its author never foresaw.</p>
+    <p class="disc">Why a <i>judging</i> model sits alongside deterministic hooks: law can't enumerate the world in advance. Hooks are law, the agent is judgment, and you need both — because the Laws always meet a case their author didn't imagine.</p>
+  </div>
   <div class="card weak">
     <p class="term">What exactly is deterministic <span class="chip k3">K3</span></p>
     <p class="meta">The <b>firing</b> is deterministic — the hook runs at that point every time, and the model can't talk it out of running. The <b>verdict</b> need not be. Handler types are <code>command</code>, <code>http</code>, <code>mcp_tool</code>, <code>prompt</code>, <code>agent</code> — and <code>prompt</code>/<code>agent</code> hand the decision to something that judges.</p>
@@ -469,6 +478,7 @@ code{font:.87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--a
       <li><b>Caching</b> straddles K3 and K4 — an ordering relation felt as cost. Plates carry the ordering, not the economy.</li>
       <li><b>Compaction</b> straddles K3 and K4 — a lifecycle event experienced as pressure.</li>
       <li><b>Skills</b> straddle K2 and K3 — a capability invoked at a position. Progressive disclosure is the point.</li>
+      <li><b>Where the kitchen broke.</b> It carries operations under constraint — seats, ticket flow, counter space, the plate stack — and carries them well. It has <b>no vocabulary for a system that rewrites its own rules</b>: the owner revises the prep list, but the dish never proposes a recipe. Science fiction is native to exactly that, which is why law and self-modification moved there. Domain is assigned per <i>kind</i>, not per concept, so the mix is deliberate.</li>
       <li><b>The investigator seat has no metaphor and needs none</b> — it's a stance, not a mechanism. It earns its place by explaining why the other three are worth learning.</li>
       <li><b>The three seats are connected, not merged.</b> Experience inside the run becomes law before the next run — via CLAUDE.md, memory, a new skill, a new hook. That loop explains how law gets revised. It does not let you sit in two chairs at once, and the seat test only works if you keep them separate.</li>
     </ul>
