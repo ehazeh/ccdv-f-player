@@ -145,6 +145,14 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;m
   function curRemaining(){var g=SEGS[st.cur];var t=live.t; if(live.state===1) t+= (Date.now()-live.ts)/1000; if(t<g.s) t=g.s; return g.e - t;}
   function drawOverlay(){var g=SEGS[st.cur]; document.getElementById('ovl-left').textContent=fmtLeft(curRemaining())+' left'; document.getElementById('ovl-txt').textContent=(st.cur+1)+' / '+SEGS.length+' · '+g.dom+' · '+g.t;}
   setInterval(drawOverlay,250);
+  // watchdog: advance when the segment end is reached even if YouTube never reports ENDED
+  var endHits=0;
+  setInterval(function(){
+    var g=SEGS[st.cur]; var rem=curRemaining();
+    var atEnd=(live.state===0)||(rem<=0.3&&live.state!==1&&live.t>=g.s);
+    if(atEnd) endHits++; else endHits=0;
+    if(endHits>=2){ endHits=0; st.done[g.id]=true; save(); if(st.cur+1<SEGS.length) load(st.cur+1,true); else render(); }
+  },1000);
   function publish(force){
     var g=SEGS[st.cur];
     var payload={i:st.cur,n:SEGS.length,dom:g.dom,t:g.t,why:g.why,s:g.s,e:g.e,cur:live.t,state:live.state,ts:Date.now(),done:Object.keys(st.done)};
